@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ConstruGest Pro - Gestor Inteligente de Obra</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='15' y='40' width='70' height='45' rx='3' fill='%23F59E0B'/><rect x='28' y='52' width='12' height='12' rx='1' fill='white'/><rect x='44' y='52' width='12' height='12' rx='1' fill='white'/><rect x='60' y='52' width='12' height='12' rx='1' fill='white'/><rect x='38' y='70' width='24' height='15' rx='2' fill='white'/><polygon points='50,10 8,44 92,44' fill='%23F97316'/><rect x='42' y='22' width='16' height='22' fill='%23FBBF24' rx='2'/><rect x='38' y='44' width='24' height='6' fill='%23D97706' rx='1'/></svg>">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#0B1120">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    :root {
+      --navy: #0B1120; --navy-mid: #152238; --navy-light: #1E3A5F;
+      --blue: #3B82F6; --blue-soft: #60A5FA;
+      --orange: #F59E0B; --green: #10B981; --red: #EF4444;
+      --purple: #8B5CF6; --purple-soft: #A78BFA;
+      --bg: #F1F5F9; --card: #FFFFFF; --text: #0F172A;
+      --text-sec: #475569; --text-muted: #94A3B8; --border: #E2E8F0;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow: 0 4px 12px rgba(0,0,0,0.07);
+      --shadow-lg: 0 12px 32px rgba(0,0,0,0.1);
+      --radius: 12px; --radius-lg: 16px; --radius-xl: 20px;
+      --transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; line-height: 1.6; }
+
+    .header { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%); color: white; padding: 12px 28px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 20px rgba(11,17,32,0.25); position: sticky; top: 0; z-index: 100; }
+    .header-left { display: flex; align-items: center; gap: 14px; }
+    .header-left svg { width: 38px; height: 38px; }
+    .header-left h1 { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.3px; }
+    .header-left span { font-size: 0.65rem; opacity: 0.7; text-transform: uppercase; letter-spacing: 1.5px; display: block; font-weight: 500; }
+    .header-right { display: flex; align-items: center; gap: 10px; }
+    .hdr-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 7px 14px; border-radius: 8px; cursor: pointer; font-size: 0.78rem; font-weight: 600; transition: var(--transition); font-family: inherit; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+    .hdr-btn:hover { background: rgba(255,255,255,0.2); transform: translateY(-1px); }
+    .hdr-btn svg { width: 16px; height: 16px; }
+    .user-badge { background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 500; }
+
+    .login-wrapper { display: flex; justify-content: center; align-items: center; min-height: calc(100vh - 62px); padding: 24px; background: linear-gradient(135deg, var(--bg) 0%, #E0E7FF 100%); }
+    .login-box { background: var(--card); padding: 48px 40px; border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); width: 100%; max-width: 420px; }
+    .login-box h2 { text-align: center; margin-bottom: 32px; color: var(--navy); font-size: 1.5rem; font-weight: 800; }
+    .login-box input { width: 100%; padding: 14px 16px; margin-bottom: 14px; border: 2px solid var(--border); border-radius: var(--radius); font-size: 0.92rem; transition: var(--transition); font-family: inherit; background: var(--bg); }
+    .login-box input:focus { border-color: var(--blue); outline: none; box-shadow: 0 0 0 4px rgba(59,130,246,0.1); background: white; }
+    .btn { padding: 14px; border: none; border-radius: var(--radius); font-size: 0.92rem; cursor: pointer; font-weight: 600; transition: var(--transition); width: 100%; font-family: inherit; }
+    .btn-primary { background: linear-gradient(135deg, var(--blue), #2563EB); color: white; }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(59,130,246,0.35); }
+    .btn-secondary { background: var(--orange); color: white; margin-top: 10px; }
+    .btn-secondary:hover { background: #D97706; }
+    .login-actions { display: flex; gap: 10px; margin-bottom: 18px; }
+    .login-action-btn { flex: 1; padding: 12px; background: var(--bg); border: 2px solid var(--border); border-radius: var(--radius); font-size: 0.82rem; font-weight: 600; color: var(--text-sec); cursor: pointer; transition: var(--transition); font-family: inherit; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .login-action-btn:hover { border-color: var(--blue); background: white; color: var(--navy); transform: translateY(-1px); box-shadow: var(--shadow); }
+    .login-action-btn svg { width: 18px; height: 18px; }
+
+    .main { display: none; padding: 24px; max-width: 1200px; margin: auto; }
+    .section-card { background: var(--card); padding: 22px; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); margin-bottom: 18px; border: 1px solid var(--border); }
+    .section-title { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; letter-spacing: -0.2px; }
+    .section-title::before { content: ''; width: 4px; height: 18px; background: var(--blue); border-radius: 2px; }
+    .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-bottom: 18px; }
+    .stat-card { background: var(--card); padding: 20px; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); text-align: center; border: 1px solid var(--border); transition: var(--transition); }
+    .stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+    .stat-card .num { font-size: 1.9rem; font-weight: 800; letter-spacing: -1px; }
+    .stat-card .label { font-size: 0.73rem; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
+    .stat-card.total .num { color: var(--navy-light); }
+    .stat-card.pendiente .num { color: var(--orange); }
+    .stat-card.proceso .num { color: var(--blue); }
+    .stat-card.completado .num { color: var(--green); }
+
+    .progress-label { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .progress-label span { font-size: 0.86rem; font-weight: 600; color: var(--text-sec); }
+    .progress-label strong { color: var(--green); font-weight: 800; }
+    .progress-track { background: var(--bg); border-radius: 10px; height: 26px; overflow: hidden; border: 1px solid var(--border); }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--green), #34D399); border-radius: 10px; transition: width 0.8s ease; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 0.75rem; min-width: 40px; }
+
+    .filters-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 10px; }
+    .filters-row input, .filters-row select { padding: 10px 13px; border: 2px solid var(--border); border-radius: var(--radius); font-size: 0.86rem; background: white; transition: var(--transition); font-family: inherit; color: var(--text); }
+    .filters-row input:focus, .filters-row select:focus { border-color: var(--blue); outline: none; box-shadow: 0 0 0 3px rgba(59,130,246,0.08); }
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(195px, 1fr)); gap: 10px; }
+    .form-grid input, .form-grid select { padding: 10px 13px; border: 2px solid var(--border); border-radius: var(--radius); font-size: 0.86rem; transition: var(--transition); font-family: inherit; background: white; }
+    .form-grid input:focus, .form-grid select:focus { border-color: var(--blue); outline: none; }
+    .form-full { width: 100%; margin-top: 10px; }
+    .form-full textarea { width: 100%; padding: 11px 13px; border: 2px solid var(--border); border-radius: var(--radius); font-size: 0.86rem; resize: vertical; min-height: 55px; font-family: inherit; }
+    .form-full textarea:focus { border-color: var(--blue); outline: none; }
+    .form-actions { display: flex; gap: 10px; margin-top: 14px; }
+    .form-actions .btn { width: auto; flex: 1; }
+
+    .hitos-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px; }
+    .hitos-top h3 { font-size: 1.05rem; color: var(--navy); font-weight: 700; }
+    .btn-export { padding: 8px 16px; border: none; border-radius: var(--radius); background: var(--green); color: white; cursor: pointer; font-size: 0.8rem; font-weight: 600; transition: var(--transition); font-family: inherit; }
+    .btn-export:hover { background: #059669; transform: translateY(-1px); }
+
+    .hito-card { background: var(--card); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); margin-bottom: 10px; overflow: hidden; border: 1px solid var(--border); transition: var(--transition); border-left: 5px solid var(--text-muted); }
+    .hito-card:hover { box-shadow: var(--shadow); }
+    .hito-card.pendiente { border-left-color: var(--orange); }
+    .hito-card.proceso { border-left-color: var(--blue); }
+    .hito-card.completado { border-left-color: var(--green); }
+    .hito-head { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; cursor: pointer; }
+    .hito-head:hover { background: #F8FAFC; }
+    .hito-title { font-weight: 700; font-size: 0.95rem; }
+    .hito-sub { font-size: 0.76rem; color: var(--text-muted); margin-top: 3px; font-weight: 500; }
+    .badges { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+    .badge { padding: 3px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; }
+    .badge-alta { background: #FEF2F2; color: var(--red); }
+    .badge-media { background: #FFFBEB; color: #B45309; }
+    .badge-baja { background: #F0FDF4; color: #15803D; }
+    .badge-estado { color: white; }
+    .badge-estado.pendiente { background: var(--orange); }
+    .badge-estado.proceso { background: var(--blue); }
+    .badge-estado.completado { background: var(--green); }
+    .hito-body { padding: 0 18px 16px; display: none; }
+    .hito-body.show { display: block; animation: slideDown 0.3s ease; }
+    @keyframes slideDown { from{opacity:0;transform:translateY(-6px);} to{opacity:1;transform:translateY(0);} }
+    .hito-body p { margin: 5px 0; font-size: 0.84rem; color: var(--text-sec); }
+    .hito-body p strong { color: var(--navy); }
+    .hito-pbar { background: var(--bg); border-radius: 6px; height: 6px; overflow: hidden; margin-top: 10px; }
+    .hito-pfill { height: 100%; border-radius: 6px; transition: width 0.4s ease; }
+    .hito-btns { display: flex; gap: 6px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); flex-wrap: wrap; }
+    .hito-btns button { padding: 6px 14px; border: none; border-radius: 7px; cursor: pointer; font-size: 0.76rem; font-weight: 600; color: white; transition: var(--transition); font-family: inherit; }
+    .hb-avance { background: var(--blue); } .hb-edit { background: var(--orange); } .hb-del { background: var(--red); }
+    .no-results { text-align: center; padding: 44px; color: var(--text-muted); }
+    .hidden { display: none !important; }
+
+    .ai-toggle { position: fixed; bottom: 26px; right: 26px; width: 62px; height: 62px; border-radius: 50%; background: linear-gradient(135deg, var(--purple), var(--purple-soft)); border: none; cursor: pointer; z-index: 1000; display: none; box-shadow: 0 6px 24px rgba(139,92,246,0.4); transition: var(--transition); align-items: center; justify-content: center; }
+    .ai-toggle:hover { transform: scale(1.08); }
+    .ai-toggle.show { display: flex; }
+    .ai-toggle svg { width: 34px; height: 34px; }
+    .ai-pulse { position: absolute; top: -2px; right: -2px; width: 14px; height: 14px; background: var(--green); border-radius: 50%; border: 3px solid white; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.5;transform:scale(1.4);} }
+
+    .ai-panel { position: fixed; bottom: 102px; right: 26px; width: 430px; max-height: 630px; background: var(--card); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); z-index: 1001; display: none; flex-direction: column; overflow: hidden; border: 1px solid var(--border); }
+    .ai-panel.show { display: flex; animation: panelIn 0.3s ease; }
+    @keyframes panelIn { from{opacity:0;transform:translateY(14px);} to{opacity:1;transform:translateY(0);} }
+    .ai-hdr { background: linear-gradient(135deg, var(--purple), var(--purple-soft)); color: white; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; }
+    .ai-hdr h3 { font-size: 0.92rem; font-weight: 700; }
+    .ai-hdr button { background: rgba(255,255,255,0.2); border: none; color: white; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-size: 1rem; }
+    .ai-quick { padding: 10px 12px; background: #F8F4FF; display: flex; gap: 5px; flex-wrap: wrap; border-bottom: 1px solid var(--border); }
+    .ai-qbtn { padding: 5px 11px; background: white; border: 1.5px solid #DDD6FE; color: var(--purple); border-radius: 18px; font-size: 0.7rem; cursor: pointer; transition: var(--transition); white-space: nowrap; font-weight: 600; font-family: inherit; }
+    .ai-qbtn:hover { background: var(--purple); color: white; }
+    .ai-msgs { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; max-height: 350px; }
+    .ai-msg { max-width: 88%; padding: 11px 14px; border-radius: 14px; font-size: 0.82rem; line-height: 1.55; white-space: pre-wrap; }
+    .ai-msg.bot { background: #F3EEF8; align-self: flex-start; border-bottom-left-radius: 4px; }
+    .ai-msg.user { background: var(--purple); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+    .ai-input-row { display: flex; padding: 10px 12px; border-top: 1px solid var(--border); gap: 8px; }
+    .ai-input-row input { flex: 1; padding: 11px 14px; border: 2px solid var(--border); border-radius: 24px; font-size: 0.83rem; outline: none; font-family: inherit; }
+    .ai-input-row input:focus { border-color: var(--purple); }
+    .ai-send { width: 42px; height: 42px; border-radius: 50%; background: var(--purple); color: white; border: none; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; }
+
+    .ai-results { background: var(--card); padding: 22px; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); margin-bottom: 18px; display: none; border: 2px solid #DDD6FE; }
+    .ai-results.show { display: block; animation: fadeIn 0.4s ease; }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(8px);} to{opacity:1;transform:translateY(0);} }
+    .ai-results h3 { color: var(--purple); margin-bottom: 12px; font-size: 1rem; font-weight: 700; }
+    .ai-rc { font-size: 0.86rem; line-height: 1.7; }
+    .btn-ai { background: linear-gradient(135deg, var(--purple), var(--purple-soft)); color: white; padding: 9px 18px; border: none; border-radius: var(--radius); cursor: pointer; font-size: 0.82rem; font-weight: 700; margin-top: 12px; transition: var(--transition); font-family: inherit; }
+    .btn-ai:hover { opacity: 0.9; }
+
+    .preview-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.75); z-index: 2000; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(6px); }
+    .preview-overlay.show { display: flex; }
+    .preview-box { background: white; border-radius: var(--radius-xl); width: 100%; max-width: 900px; max-height: 92vh; overflow-y: auto; box-shadow: 0 24px 80px rgba(0,0,0,0.3); }
+    .preview-hdr { background: linear-gradient(135deg, var(--purple), var(--purple-soft)); color: white; padding: 18px 26px; display: flex; justify-content: space-between; align-items: center; border-radius: var(--radius-xl) var(--radius-xl) 0 0; }
+    .preview-hdr h2 { font-size: 1.1rem; font-weight: 700; }
+    .preview-hdr button { background: rgba(255,255,255,0.2); border: none; color: white; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; }
+    .preview-body { padding: 26px; }
+    .preview-label { font-size: 0.84rem; color: var(--text-muted); text-align: center; margin-bottom: 14px; }
+    .preview-options { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; justify-content: center; }
+    .preview-opt { padding: 7px 16px; background: white; border: 2px solid #DDD6FE; color: var(--purple); border-radius: 22px; cursor: pointer; font-size: 0.8rem; font-weight: 600; transition: var(--transition); font-family: inherit; }
+    .preview-opt:hover, .preview-opt.active { background: var(--purple); color: white; border-color: var(--purple); }
+    .preview-render { border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 18px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); background: linear-gradient(180deg, #87CEEB 0%, #B0E0E6 35%, #90EE90 35%, #228B22 100%); }
+    .preview-render svg { width: 100%; height: auto; display: block; }
+    .preview-info { background: #F8F4FF; border-radius: var(--radius); padding: 16px; font-size: 0.84rem; line-height: 1.8; }
+    .preview-info strong { color: var(--navy); }
+
+    .planner-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 14px; }
+    .planner-room { background: white; border: 2px solid var(--border); border-radius: var(--radius); padding: 14px; }
+    .planner-room:hover { border-color: var(--blue-soft); }
+    .planner-room h4 { font-size: 0.88rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .planner-room p { font-size: 0.78rem; color: var(--text-sec); margin: 2px 0; }
+    .planner-room .dim { font-weight: 700; color: var(--blue); }
+
+    @media (max-width: 768px) {
+      .header { padding: 10px 16px; flex-wrap: wrap; gap: 8px; }
+      .header-right { order: 3; width: 100%; justify-content: center; }
+      .logo-area h1 { font-size: 1.1rem; }
+      .main { padding: 16px; }
+      .filters-row, .form-grid { grid-template-columns: 1fr; }
+      .ai-panel { width: calc(100% - 20px); right: 10px; bottom: 96px; }
+      .hito-head { flex-direction: column; gap: 8px; align-items: flex-start; }
+      .dashboard { grid-template-columns: repeat(2, 1fr); }
+      .planner-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <svg viewBox="0 0 100 100" fill="none"><rect x="10" y="44" width="80" height="46" rx="3" fill="#F59E0B"/><rect x="22" y="54" width="14" height="14" rx="2" fill="white" opacity="0.9"/><rect x="43" y="54" width="14" height="14" rx="2" fill="white" opacity="0.9"/><rect x="64" y="54" width="14" height="14" rx="2" fill="white" opacity="0.9"/><rect x="36" y="74" width="22" height="16" rx="2" fill="white" opacity="0.9"/><polygon points="50,14 6,48 94,48" fill="#F97316"/><rect x="45" y="28" width="10" height="20" fill="#FBBF24" rx="1"/></svg>
+    <div><h1>ConstruGest Pro</h1><span>Gestor Inteligente de Obra</span></div>
+  </div>
+  <div class="header-right" id="headerRight">
+    <button class="hdr-btn" id="btnShare" onclick="compartirApp()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      Compartir
+    </button>
+    <button class="hdr-btn" id="btnDownload" onclick="descargarApp()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Descargar
+    </button>
+    <span class="user-badge" id="userName" style="display:none;"></span>
+    <button class="hdr-btn" id="btnLogout" onclick="logout()" style="display:none;">Salir</button>
+  </div>
+</div>
+
+<div class="login-wrapper" id="loginWrapper">
+  <div class="login-box">
+    <h2>Bienvenido</h2>
+    <div class="login-actions">
+      <button class="login-action-btn" onclick="compartirApp()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        Compartir App
+      </button>
+      <button class="login-action-btn" onclick="descargarApp()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Descargar App
+      </button>
+    </div>
+    <input type="text" id="usuario" placeholder="Usuario" onkeydown="if(event.key==='Enter')login()">
+    <input type="password" id="password" placeholder="Contraseña" onkeydown="if(event.key==='Enter')login()">
+    <button class="btn btn-primary" onclick="login()">Iniciar sesión</button>
+    <button class="btn btn-secondary" onclick="registrar()">Crear cuenta</button>
+  </div>
+</div>
+
+<div class="main" id="appMain">
+  <div class="dashboard">
+    <div class="stat-card total"><div class="num" id="statTotal">0</div><div class="label">Total Hitos</div></div>
+    <div class="stat-card pendiente"><div class="num" id="statPendiente">0</div><div class="label">Pendientes</div></div>
+    <div class="stat-card proceso"><div class="num" id="statProceso">0</div><div class="label">En Proceso</div></div>
+    <div class="stat-card completado"><div class="num" id="statCompletado">0</div><div class="label">Completados</div></div>
+  </div>
+
+  <div class="section-card">
+    <div class="progress-label"><span>Progreso General del Proyecto</span><strong id="progLabel">0%</strong></div>
+    <div class="progress-track"><div class="progress-fill" id="progressBar" style="width:0%;"></div></div>
+  </div>
+
+  <div class="ai-results" id="aiResults"><h3 id="aiResultsTitle">Asistente IA</h3><div class="ai-rc" id="aiResultsContent"></div><button class="btn-ai" onclick="agregarSugerenciasComoHitos()" id="btnAgregarSugerencias" style="display:none;">Agregar sugerencias como hitos</button></div>
+
+  <div class="section-card">
+    <div class="section-title">Buscar y Filtrar</div>
+    <div class="filters-row">
+      <input type="text" id="filtroBuscar" placeholder="Buscar hito..." oninput="aplicarFiltros()">
+      <select id="filtroEstado" onchange="aplicarFiltros()"><option value="">Todos</option><option value="Pendiente">Pendiente</option><option value="En proceso">En proceso</option><option value="Completado">Completado</option></select>
+      <select id="filtroPrioridad" onchange="aplicarFiltros()"><option value="">Todas</option><option value="Alta">Alta</option><option value="Media">Media</option><option value="Baja">Baja</option></select>
+      <select id="filtroCategoria" onchange="aplicarFiltros()"><option value="">Todas</option><option value="CimentaciÃ³n">CimentaciÃ³n</option><option value="Estructura">Estructura</option><option value="Instalaciones">Instalaciones</option><option value="Acabados">Acabados</option><option value="Exteriores">Exteriores</option><option value="Permisos">Permisos</option><option value="Otro">Otro</option></select>
+      <select id="filtroOrden" onchange="aplicarFiltros()"><option value="fecha-asc">Fecha: antigua</option><option value="fecha-desc">Fecha: reciente</option><option value="nombre-asc">A-Z</option><option value="prioridad">Prioridad</option></select>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title" id="formTitle">Nuevo Hito</div>
+    <div class="form-grid">
+      <input type="text" id="hitNombre" placeholder="Nombre del hito">
+      <input type="date" id="hitFecha">
+      <input type="number" id="hitProgreso" placeholder="% Avance" min="0" max="100" value="0">
+      <select id="hitEstado"><option value="Pendiente">Pendiente</option><option value="En proceso">En proceso</option><option value="Completado">Completado</option></select>
+      <select id="hitPrioridad"><option value="Alta">Alta</option><option value="Media" selected>Media</option><option value="Baja">Baja</option></select>
+      <select id="hitCategoria"><option value="CimentaciÃ³n">CimentaciÃ³n</option><option value="Estructura">Estructura</option><option value="Instalaciones">Instalaciones</option><option value="Acabados">Acabados</option><option value="Exteriores">Exteriores</option><option value="Permisos">Permisos</option><option value="Otro">Otro</option></select>
+      <input type="text" id="hitResponsable" placeholder="Responsable">
+      <input type="text" id="hitPresupuesto" placeholder="Presupuesto ($)">
+    </div>
+    <div class="form-full"><textarea id="hitDescripcion" placeholder="DescripciÃ³n o notas..."></textarea></div>
+    <div class="form-actions">
+      <button class="btn btn-primary" id="btnGuardar" onclick="guardarHito()">Agregar Hito</button>
+      <button class="btn hidden" id="btnCancelar" onclick="cancelarEdicion()" style="background:var(--text-muted);color:white;">Cancelar</button>
+    </div>
+  </div>
+
+  <div class="hitos-top"><h3 id="hitosCount">Hitos del proyecto</h3><button class="btn-export" onclick="exportarCSV()">Exportar CSV</button></div>
+  <div id="listaHitos"></div>
+</div>
+
+<button class="ai-toggle" id="aiToggle" onclick="toggleAiPanel()">
+  <div class="ai-pulse"></div>
+  <svg viewBox="0 0 64 64" fill="none"><rect x="14" y="18" width="36" height="30" rx="7" fill="white"/><circle cx="24" cy="33" r="5" fill="#8B5CF6"/><circle cx="40" cy="33" r="5" fill="#8B5CF6"/><rect x="21" y="41" width="22" height="4" rx="2" fill="#8B5CF6"/><line x1="32" y1="8" x2="32" y2="18" stroke="white" stroke-width="3" stroke-linecap="round"/><circle cx="32" cy="6" r="5" fill="#F59E0B"/><rect x="6" y="26" width="8" height="14" rx="4" fill="white"/><rect x="50" y="26" width="8" height="14" rx="4" fill="white"/></svg>
+</button>
+
+<div class="ai-panel" id="aiPanel">
+  <div class="ai-hdr"><h3>Asistente IA Pro</h3><button onclick="toggleAiPanel()">&times;</button></div>
+  <div class="ai-quick">
+    <button class="ai-qbtn" onclick="aiQuery('planificar casa completa')">Planificar Casa</button>
+    <button class="ai-qbtn" onclick="aiQuery('ver como queda')">Ver Casa</button>
+    <button class="ai-qbtn" onclick="aiQuery('analizar proyecto')">Analizar</button>
+    <button class="ai-qbtn" onclick="aiQuery('presupuesto')">Presupuesto</button>
+    <button class="ai-qbtn" onclick="aiQuery('materiales')">Materiales</button>
+    <button class="ai-qbtn" onclick="aiQuery('ayuda')">Ayuda</button>
+  </div>
+  <div class="ai-msgs" id="aiMessages">
+    <div class="ai-msg bot">Hola! Soy tu asistente IA Pro. Puedo:
+
+&#8226; Planificar casas con planos detallados
+&#8226; Mostrar vistas realistas de construcciones
+&#8226; Calcular materiales y presupuestos
+&#8226; Analizar tu proyecto
+
+Que quieres construir?</div>
+  </div>
+  <div class="ai-input-row">
+    <input type="text" id="aiInput" placeholder="Escribe tu consulta..." onkeydown="if(event.key==='Enter')sendAiMessage()">
+    <button class="ai-send" onclick="sendAiMessage()">&#10140;</button>
+  </div>
+</div>
+
+<div class="preview-overlay" id="previewOverlay">
+  <div class="preview-box">
+    <div class="preview-hdr"><h2>Visualizador de Construcci&oacute;n</h2><button onclick="closePreview()">&times;</button></div>
+    <div class="preview-body">
+      <p class="preview-label">Vista previa renderizada de tu proyecto:</p>
+      <div class="preview-options">
+        <button class="preview-opt active" onclick="showPreview('casa')">Casa Moderna</button>
+        <button class="preview-opt" onclick="showPreview('casa2')">Casa 2 Pisos</button>
+        <button class="preview-opt" onclick="showPreview('edificio')">Edificio</button>
+        <button class="preview-opt" onclick="showPreview('galpon')">Galp&oacute;n</button>
+      </div>
+      <div class="preview-render" id="previewRender"></div>
+      <div class="preview-info" id="previewInfo"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+let hitos=[],hitosFiltrados=[],usuarioActual=null,editandoId=null,sugerenciasTemp=[],aiOpen=false;
+
+function registrar(){const u=document.getElementById('usuario').value.trim(),p=document.getElementById('password').value;if(!u||!p)return alert('Completa todos los campos');if(localStorage.getItem('user_'+u))return alert('Usuario ya existe');localStorage.setItem('user_'+u,p);alert('Registrado. Inicia sesi\u00f3n.');}
+function login(){const u=document.getElementById('usuario').value.trim(),p=document.getElementById('password').value;if(localStorage.getItem('user_'+u)===p){usuarioActual=u;document.getElementById('loginWrapper').classList.add('hidden');document.getElementById('appMain').style.display='block';document.getElementById('userName').textContent=u;document.getElementById('userName').style.display='inline';document.getElementById('btnLogout').style.display='flex';document.getElementById('aiToggle').classList.add('show');cargarHitos();}else alert('Datos incorrectos');}
+function logout(){usuarioActual=null;editandoId=null;document.getElementById('loginWrapper').classList.remove('hidden');document.getElementById('appMain').style.display='none';document.getElementById('userName').style.display='none';document.getElementById('btnLogout').style.display='none';document.getElementById('aiToggle').classList.remove('show');document.getElementById('aiPanel').classList.remove('show');aiOpen=false;document.getElementById('usuario').value='';document.getElementById('password').value='';}
+
+function guardarHito(){const n=document.getElementById('hitNombre').value.trim(),f=document.getElementById('hitFecha').value,pr=parseInt(document.getElementById('hitProgreso').value)||0,e=document.getElementById('hitEstado').value,pi=document.getElementById('hitPrioridad').value,c=document.getElementById('hitCategoria').value,r=document.getElementById('hitResponsable').value.trim(),pr2=document.getElementById('hitPresupuesto').value.trim(),d=document.getElementById('hitDescripcion').value.trim();if(!n||!f)return alert('Nombre y fecha obligatorios');if(editandoId){hitos=hitos.map(h=>h.id===editandoId?{...h,nombre:n,fecha:f,progreso:pr,estado:e,prioridad:pi,categoria:c,responsable:r,presupuesto:pr2,descripcion:d}:h);editandoId=null;document.getElementById('formTitle').textContent='Nuevo Hito';document.getElementById('btnGuardar').textContent='Agregar Hito';document.getElementById('btnCancelar').classList.add('hidden');}else hitos.push({id:Date.now(),nombre:n,fecha:f,progreso:pr,estado:e,prioridad:pi,categoria:c,responsable:r,presupuesto:pr2,descripcion:d});limpiarForm();guardarLS();aplicarFiltros();}
+function limpiarForm(){['hitNombre','hitFecha','hitResponsable','hitPresupuesto','hitDescripcion'].forEach(id=>document.getElementById(id).value='');document.getElementById('hitProgreso').value='0';document.getElementById('hitEstado').value='Pendiente';document.getElementById('hitPrioridad').value='Media';document.getElementById('hitCategoria').value='Cimentaci\u00f3n';}
+function editarHito(id){const h=hitos.find(x=>x.id===id);if(!h)return;editandoId=id;Object.entries({hitNombre:h.nombre,hitFecha:h.fecha,hitProgreso:h.progreso,hitEstado:h.estado,hitPrioridad:h.prioridad,hitCategoria:h.categoria,hitResponsable:h.responsable||'',hitPresupuesto:h.presupuesto||'',hitDescripcion:h.descripcion||''}).forEach(([k,v])=>document.getElementById(k).value=v);document.getElementById('formTitle').textContent='Editando';document.getElementById('btnGuardar').textContent='Guardar';document.getElementById('btnCancelar').classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'});}
+function cancelarEdicion(){editandoId=null;limpiarForm();document.getElementById('formTitle').textContent='Nuevo Hito';document.getElementById('btnGuardar').textContent='Agregar Hito';document.getElementById('btnCancelar').classList.add('hidden');}
+function eliminarHito(id){if(!confirm('\u00bfEliminar?'))return;hitos=hitos.filter(h=>h.id!==id);if(editandoId===id)cancelarEdicion();guardarLS();aplicarFiltros();}
+function avanzarProgreso(id){hitos=hitos.map(h=>{if(h.id===id){h.progreso=Math.min(h.progreso+10,100);h.estado=h.progreso===100?'Completado':h.progreso>0?'En proceso':'Pendiente';}return h;});guardarLS();aplicarFiltros();}
+function toggleDetalle(id){const el=document.getElementById('detail-'+id);if(el)el.classList.toggle('show');}
+
+function aplicarFiltros(){const b=document.getElementById('filtroBuscar').value.toLowerCase(),e=document.getElementById('filtroEstado').value,p=document.getElementById('filtroPrioridad').value,c=document.getElementById('filtroCategoria').value,o=document.getElementById('filtroOrden').value;hitosFiltrados=hitos.filter(h=>{if(b&&!h.nombre.toLowerCase().includes(b))return false;if(e&&h.estado!==e)return false;if(p&&h.prioridad!==p)return false;if(c&&h.categoria!==c)return false;return true;});const om={'fecha-asc':(a,b)=>new Date(a.fecha)-new Date(b.fecha),'fecha-desc':(a,b)=>new Date(b.fecha)-new Date(a.fecha),'nombre-asc':(a,b)=>a.nombre.localeCompare(b.nombre),'prioridad':(a,b)=>({'Alta':3,'Media':2,'Baja':1}[b.prioridad]||0)-({'Alta':3,'Media':2,'Baja':1}[a.prioridad]||0)};hitosFiltrados.sort(om[o]||om['fecha-asc']);mostrarHitos();actualizarDash();}
+
+function mostrarHitos(){const l=document.getElementById('listaHitos');document.getElementById('hitosCount').textContent='Hitos: '+hitosFiltrados.length+' de '+hitos.length;if(!hitosFiltrados.length){l.innerHTML='<div class="no-results">Sin hitos.</div>';return;}l.innerHTML=hitosFiltrados.map(h=>{const ec=h.estado==='Pendiente'?'pendiente':h.estado==='En proceso'?'proceso':'completado',pc=h.prioridad==='Alta'?'badge-alta':h.prioridad==='Media'?'badge-media':'badge-baja',pr=h.presupuesto?'$'+Number(h.presupuesto).toLocaleString():'N/A',col=h.progreso>=100?'var(--green)':h.progreso>50?'var(--blue)':'var(--orange)';return '<div class="hito-card '+ec+'"><div class="hito-head" onclick="toggleDetalle('+h.id+')"><div><div class="hito-title">'+h.nombre+'</div><div class="hito-sub">'+h.fecha+' \u00b7 '+h.categoria+'</div></div><div class="badges"><span class="badge '+pc+'">'+h.prioridad+'</span><span class="badge badge-estado '+ec+'">'+h.estado+'</span><span style="font-size:0.8rem;font-weight:700;">'+h.progreso+'%</span></div></div><div class="hito-body" id="detail-'+h.id+'"><p><strong>Responsable:</strong> '+(h.responsable||'Sin asignar')+'</p><p><strong>Presupuesto:</strong> '+pr+'</p><p><strong>Descripci\u00f3n:</strong> '+(h.descripcion||'\u2014')+'</p><div class="hito-pbar"><div class="hito-pfill" style="width:'+h.progreso+'%;background:'+col+'"></div></div><div class="hito-btns"><button class="hb-avance" onclick="event.stopPropagation();avanzarProgreso('+h.id+')">+10%</button><button class="hb-edit" onclick="event.stopPropagation();editarHito('+h.id+')">Editar</button><button class="hb-del" onclick="event.stopPropagation();eliminarHito('+h.id+')">Eliminar</button></div></div></div>';}).join('');}
+
+function actualizarDash(){const t=hitos.length;document.getElementById('statTotal').textContent=t;document.getElementById('statPendiente').textContent=hitos.filter(h=>h.estado==='Pendiente').length;document.getElementById('statProceso').textContent=hitos.filter(h=>h.estado==='En proceso').length;document.getElementById('statCompletado').textContent=hitos.filter(h=>h.estado==='Completado').length;const pg=t>0?Math.round(hitos.reduce((s,h)=>s+h.progreso,0)/t):0;document.getElementById('progressBar').style.width=pg+'%';document.getElementById('progLabel').textContent=pg+'%';}
+
+function exportarCSV(){if(!hitos.length)return alert('Sin hitos');const h=['Nombre','Fecha','Estado','Progreso','Prioridad','Categoria','Responsable','Presupuesto','Descripcion'],r=hitos.map(x=>[x.nombre,x.fecha,x.estado,x.progreso+'%',x.prioridad,x.categoria,x.responsable||'',x.presupuesto||'',(x.descripcion||'').replace(/,/g,';')]);const b=new Blob(['\ufeff'+[h,...r].map(x=>x.join(',')).join('\n')],{type:'text/csv;charset=utf-8;'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='hitos_'+usuarioActual+'_'+new Date().toISOString().slice(0,10)+'.csv';a.click();}
+function guardarLS(){localStorage.setItem('hitos_'+usuarioActual,JSON.stringify(hitos));}
+function cargarHitos(){const d=localStorage.getItem('hitos_'+usuarioActual);hitos=d?JSON.parse(d):[];aplicarFiltros();}
+
+// COMPARTIR Y DESCARGAR
+function compartirApp(){
+  const shareData={title:'ConstruGest Pro',text:'Gestor inteligente de obra con IA - Organiza tus proyectos de construccion',url:window.location.href};
+  if(navigator.share){
+    navigator.share(shareData).catch(()=>{
+      copiarEnlace();
+    });
+  } else {
+    copiarEnlace();
+  }
+}
+function copiarEnlace(){
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(window.location.href).then(()=>{
+      alert('Enlace copiado al portapapeles!\n\nCompartelo por WhatsApp, email o redes sociales.');
+    }).catch(()=>{
+      prompt('Copia este enlace manualmente:',window.location.href);
+    });
+  } else {
+    prompt('Copia este enlace:',window.location.href);
+  }
+}
+function descargarApp(){
+  const html='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
+  const blob=new Blob([html],{type:'text/html;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  const fecha=new Date().toISOString().slice(0,10);
+  a.download='ConstruGestPro_'+fecha+'.html';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+  alert('App descargada exitosamente!\n\nPuedes abrir el archivo .html directamente en tu navegador, incluso sin internet.');
+}
+
+// AI
+function toggleAiPanel(){aiOpen=!aiOpen;document.getElementById('aiPanel').classList.toggle('show',aiOpen);}
+function sendAiMessage(){const i=document.getElementById('aiInput'),m=i.value.trim();if(!m)return;i.value='';addAiMsg(m,'user');setTimeout(()=>processAi(m),400);}
+function addAiMsg(t,type){const c=document.getElementById('aiMessages'),d=document.createElement('div');d.className='ai-msg '+(type==='user'?'user':'bot');d.innerHTML=t;c.appendChild(d);c.scrollTop=c.scrollHeight;}
+function aiQuery(q){addAiMsg(q,'user');setTimeout(()=>processAi(q),400);}
+
+function processAi(q){
+  const l=q.toLowerCase();
+  if(l.includes('planificar')&&l.includes('casa'))addAiMsg(planificarCasa(),'bot');
+  else if(l.includes('ver como')||l.includes('visualizar')||l.includes('como queda')||l.includes('casa')&&!l.includes('planificar')){showPreviewModal();addAiMsg('Abriendo visualizador con vistas realistas!','bot');}
+  else if(l.includes('analizar')||l.includes('resumen'))addAiMsg(analyze(),'bot');
+  else if(l.includes('presupuesto')||l.includes('costo'))addAiMsg(budget(),'bot');
+  else if(l.includes('material')||l.includes('rendimiento'))addAiMsg(matPerf(),'bot');
+  else if(l.includes('ayuda')||l.includes('puedes'))addAiMsg(help(),'bot');
+  else addAiMsg(smartResp(l),'bot');
+}
+
+function planificarCasa(){
+  const rooms=[
+    {n:'Sala Principal',d:'5.0 x 4.0 m',a:'20.0 m2',det:'Ventanal, porcelanato, LED empotrado'},
+    {n:'Cocina Integral',d:'3.5 x 3.0 m',a:'10.5 m2',det:'Isla central, granito, campana'},
+    {n:'Comedor',d:'3.5 x 3.0 m',a:'10.5 m2',det:'6 personas, iluminacion colgante'},
+    {n:'Recamara Principal',d:'4.5 x 4.0 m',a:'18.0 m2',det:'Bano completo, closet, balcon'},
+    {n:'Recamara 2',d:'3.5 x 3.5 m',a:'12.3 m2',det:'Closet empotrado'},
+    {n:'Recamara 3',d:'3.5 x 3.0 m',a:'10.5 m2',det:'Estudio o huespedes'},
+    {n:'Bano Principal',d:'2.5 x 2.0 m',a:'5.0 m2',det:'Ducha con cancel, doble lavabo'},
+    {n:'Bano Secundario',d:'2.0 x 2.0 m',a:'4.0 m2',det:'Shower, wc, lavabo'},
+    {n:'Lavanderia',d:'2.5 x 2.0 m',a:'5.0 m2',det:'Vertedero, conexiones'},
+    {n:'Garage',d:'6.0 x 3.0 m',a:'18.0 m2',det:'1 auto + taller'},
+    {n:'Jardin',d:'4.0 x 3.0 m',a:'12.0 m2',det:'Pasto, arboles, luz exterior'}
+  ];
+  const ta=rooms.reduce((s,r)=>s+parseFloat(r.a),0),pe=ta*12000;
+  let rh=rooms.map(r=>'<div class="planner-room"><h4>'+r.n+'</h4><p class="dim">'+r.d+' - '+r.a+'</p><p>'+r.det+'</p></div>').join('');
+  setTimeout(()=>{
+    document.getElementById('aiResultsTitle').textContent='Plan de Casa Detallado';
+    document.getElementById('aiResultsContent').innerHTML='<p><strong>Superficie:</strong> '+ta.toFixed(1)+' m2 | <strong>Presupuesto:</strong> $'+pe.toLocaleString()+' | <strong>Tiempo:</strong> 8-10 meses</p><div class="planner-grid">'+rh+'</div>';
+    document.getElementById('btnAgregarSugerencias').style.display='inline-block';
+    document.getElementById('aiResults').classList.add('show');
+  },500);
+  sugerenciasTemp=[];
+  const hoy=new Date();
+  const fases=[
+    {cat:'Permisos',items:['Licencia construccion','Estudio suelos','Planos'],dias:[15,10,20],pr:[5000,12000,15000]},
+    {cat:'Cimentacion',items:['Limpieza y trazo','Excavacion zapatas','Acero cimentacion','Colado cimentacion'],dias:[3,7,5,4],pr:[3000,8000,12000,18000]},
+    {cat:'Estructura',items:['Muros planta baja','Castillos y dalas','Losa entrepiso','Muros planta alta','Losa azotea'],dias:[12,8,5,10,5],pr:[25000,15000,28000,20000,30000]},
+    {cat:'Instalaciones',items:['Electrica','Hidraulica','Gas','Internet'],dias:[10,8,4,3],pr:[22000,18000,8000,5000]},
+    {cat:'Acabados',items:['Aplanados','Pisos y azulejos','Pintura','Puertas/ventanas','Cocina','Closets'],dias:[12,8,7,5,5,4],pr:[15000,20000,10000,18000,35000,20000]},
+    {cat:'Exteriores',items:['Jardineria','Banqueta','Pintura exterior','Limpieza'],dias:[5,4,5,2],pr:[10000,8000,8000,3000]}
+  ];
+  let dc=0;
+  fases.forEach(f=>{f.items.forEach((item,i)=>{const d=new Date(hoy);d.setDate(d.getDate()+dc);sugerenciasTemp.push({id:Date.now()+Math.random()*10000|0,nombre:item,fecha:d.toISOString().slice(0,10),progreso:0,estado:'Pendiente',prioridad:i===0&&f.cat!=='Exteriores'?'Alta':'Media',categoria:f.cat,responsable:'',presupuesto:f.pr[i].toString(),descripcion:'Duracion: '+f.dias[i]+' dias'});dc+=f.dias[i];});});
+  return 'PLAN DE CASA\n\nSuperficie: '+ta.toFixed(1)+' m2\nPresupuesto: $'+pe.toLocaleString()+'\nTiempo: 8-10 meses\n\n'+rooms.map(r=>'- '+r.n+' ('+r.a+')').join('\n')+'\n\nPulsa "Agregar sugerencias" para importar '+sugerenciasTemp.length+' hitos.';
+}
+
+function agregarSugerenciasComoHitos(){if(!sugerenciasTemp.length)return;hitos=[...hitos,...sugerenciasTemp];guardarLS();aplicarFiltros();addAiMsg(sugerenciasTemp.length+' hitos agregados!','bot');sugerenciasTemp=[];document.getElementById('aiResults').classList.remove('show');document.getElementById('btnAgregarSugerencias').style.display='none';}
+
+function analyze(){if(!hitos.length)return 'No tienes hitos. Usa "Planificar Casa".';const t=hitos.length,pg=Math.round(hitos.reduce((s,h)=>s+h.progreso,0)/t),pt=hitos.reduce((s,h)=>s+(parseFloat(h.presupuesto)||0),0);return '- Total: '+t+' hitos\n- Progreso: '+pg+'%\n- Presupuesto: $'+pt.toLocaleString()+(pg<30?'\n\nFase inicial. Prioriza.':pg<70?'\n\nBuen ritmo.':'\n\nCasi listo!');}
+function budget(){if(!hitos.length)return 'Agrega hitos primero.';const c=hitos.filter(h=>parseFloat(h.presupuesto)>0),pt=c.reduce((s,h)=>s+parseFloat(h.presupuesto),0),ej=c.filter(h=>h.estado==='Completado').reduce((s,h)=>s+parseFloat(h.presupuesto),0);return 'PRESUPUESTO\n\nTotal: $'+pt.toLocaleString()+'\nEjecutado: $'+ej.toLocaleString()+'\nPendiente: $'+(pt-ej).toLocaleString();}
+function matPerf(){return 'MATERIALES\n\nCemento 50kg | $180-250 | 0.5m3 concreto\nArena | $200-350/m3 | 15m2 aplanado\nVarilla 1/2" | $250-380 | 16.3kg/12m\nBlock | $12-18/pza | 12.5/m2\nPiso | $120-350/m2 | +5% desperdicio\nPintura 19L | $600-1200 | 60-70m2';}
+function help(){return 'COMANDOS:\n\n- "Planificar casa" - Plano completo\n- "Ver casa" - Visualizador realista\n- "Analizar" - Resumen proyecto\n- "Presupuesto" - Costos\n- "Materiales" - Precios y rendimientos';}
+function smartResp(q){const k={cemento:'Cemento 50kg: $180-250/saco. 0.5m3 concreto.',acero:'Varilla corrugada: $250-380/pza 12m.',block:'Block: 12.5 pzas/m2. $12-18/pza.',pintura:'1 galon 19L = 60-70m2 (2 capas).',concreto:'fc200: 7 sacos + 0.56m3 arena + 0.84m3 grava por m3.',ayuda:'Prueba "planificar casa" o "ver casa".'};for(const[v,w]of Object.entries(k))if(q.includes(v))return w;return 'Prueba: "planificar casa", "ver casa", "materiales" o "ayuda".';}
+
+// PREVIEW REALISTA
+function showPreviewModal(){document.getElementById('previewOverlay').classList.add('show');showPreview('casa');}
+function closePreview(){document.getElementById('previewOverlay').classList.remove('show');}
+
+function showPreview(type){
+  document.querySelectorAll('.preview-opt').forEach(b=>{b.classList.remove('active');if(b.textContent.toLowerCase().includes(type.slice(0,4)))b.classList.add('active');});
+  const render=document.getElementById('previewRender'),info=document.getElementById('previewInfo');
+
+  const renders={
+casa:`<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="0.4"><stop offset="0%" stop-color="#4A90D9"/><stop offset="100%" stop-color="#87CEEB"/></linearGradient>
+<linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5B8C3E"/><stop offset="100%" stop-color="#3D6B2E"/></linearGradient>
+<linearGradient id="wall" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#F5F0E8"/><stop offset="100%" stop-color="#EDE6D8"/></linearGradient>
+<linearGradient id="roof" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8B4513"/><stop offset="100%" stop-color="#6B3410"/></linearGradient>
+<linearGradient id="door" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5D3A1A"/><stop offset="100%" stop-color="#4A2E15"/></linearGradient>
+<filter id="shadow" x="-10%" y="-10%" width="130%" height="130%"><feDropShadow dx="3" dy="5" stdDeviation="4" flood-opacity="0.3"/></filter>
+<filter id="softShadow" x="-5%" y="-5%" width="115%" height="115%"><feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.2"/></filter>
+<radialGradient id="sun" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FFF7AE"/><stop offset="100%" stop-color="#FFD700" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="800" height="500" fill="url(#sky)"/>
+<circle cx="680" cy="80" r="55" fill="url(#sun)" opacity="0.6"/>
+<circle cx="680" cy="80" r="30" fill="#FFFDE7" opacity="0.9"/>
+<ellipse cx="200" cy="60" rx="80" ry="25" fill="white" opacity="0.7"/>
+<ellipse cx="220" cy="55" rx="60" ry="20" fill="white" opacity="0.8"/>
+<ellipse cx="500" cy="45" rx="70" ry="22" fill="white" opacity="0.6"/>
+<ellipse cx="520" cy="40" rx="50" ry="18" fill="white" opacity="0.7"/>
+<rect y="340" width="800" height="160" fill="url(#ground)"/>
+<rect y="340" width="800" height="8" fill="#4A7A2E"/>
+<path d="M0 348 Q100 345 200 348 Q300 351 400 348 Q500 345 600 348 Q700 351 800 348" fill="none" stroke="#6B9B3A" stroke-width="3" opacity="0.5"/>
+<rect x="180" y="170" width="440" height="175" fill="url(#wall)" rx="2" filter="url(#shadow)"/>
+<rect x="180" y="170" width="440" height="8" fill="#D4C5A9"/>
+<rect x="180" y="170" width="6" height="175" fill="#D4C5A9"/>
+<rect x="614" y="170" width="6" height="175" fill="#D4C5A9"/>
+<polygon points="155,170 400,70 645,170" fill="url(#roof)" filter="url(#shadow)"/>
+<polygon points="165,170 400,78 635,170" fill="#A0522D" opacity="0.7"/>
+<line x1="200" y1="170" x2="400" y2="78" stroke="#8B4513" stroke-width="2" opacity="0.5"/>
+<line x1="600" y1="170" x2="400" y2="78" stroke="#8B4513" stroke-width="2" opacity="0.5"/>
+<rect x="400" y="60" width="8" height="25" fill="#8B7355" rx="1"/>
+<rect x="396" y="55" width="16" height="8" fill="#6B5340" rx="1"/>
+<rect x="215" y="200" width="75" height="70" fill="#D6EAF8" rx="2" stroke="#AED6F1" stroke-width="2" filter="url(#softShadow)"/>
+<line x1="252" y1="200" x2="252" y2="270" stroke="#AED6F1" stroke-width="1.5"/>
+<line x1="215" y1="235" x2="290" y2="235" stroke="#AED6F1" stroke-width="1.5"/>
+<rect x="510" y="200" width="75" height="70" fill="#D6EAF8" rx="2" stroke="#AED6F1" stroke-width="2" filter="url(#softShadow)"/>
+<line x1="547" y1="200" x2="547" y2="270" stroke="#AED6F1" stroke-width="1.5"/>
+<line x1="510" y1="235" x2="585" y2="235" stroke="#AED6F1" stroke-width="1.5"/>
+<rect x="255" y="185" width="60" height="40" fill="#D6EAF8" rx="2" stroke="#AED6F1" stroke-width="1.5" filter="url(#softShadow)"/>
+<rect x="485" y="185" width="60" height="40" fill="#D6EAF8" rx="2" stroke="#AED6F1" stroke-width="1.5" filter="url(#softShadow)"/>
+<rect x="365" y="230" width="70" height="115" fill="url(#door)" rx="3" filter="url(#shadow)"/>
+<rect x="365" y="230" width="70" height="6" fill="#4A2E15"/>
+<circle cx="425" cy="290" r="5" fill="#D4AC0D"/>
+<rect x="365" y="230" width="70" height="50" fill="#E8D5B7" rx="2" opacity="0.3"/>
+<rect x="100" y="280" width="70" height="65" fill="url(#wall)" rx="2" filter="url(#shadow)"/>
+<polygon points="90,280 135,240 180,280" fill="url(#roof)"/>
+<rect x="115" y="295" width="20" height="25" fill="#D6EAF8" rx="1" stroke="#AED6F1" stroke-width="1"/>
+<rect x="145" y="295" width="20" height="25" fill="#D6EAF8" rx="1" stroke="#AED6F1" stroke-width="1"/>
+<rect x="630" y="290" width="60" height="55" fill="url(#wall)" rx="2" filter="url(#shadow)"/>
+<polygon points="622,290 660,255 698,290" fill="url(#roof)"/>
+<rect x="642" y="305" width="18" height="22" fill="#D6EAF8" rx="1" stroke="#AED6F1" stroke-width="1"/>
+<rect x="665" y="305" width="18" height="22" fill="#D6EAF8" rx="1" stroke="#AED6F1" stroke-width="1"/>
+<rect x="160" y="345" width="80" height="18" fill="#BDBDBD" rx="2"/>
+<rect x="560" y="345" width="80" height="18" fill="#BDBDBD" rx="2"/>
+<ellipse cx="80" cy="310" rx="35" ry="50" fill="#2E7D32"/>
+<ellipse cx="80" cy="280" rx="28" ry="35" fill="#388E3C"/>
+<rect x="76" y="330" width="8" height="20" fill="#5D4037" rx="2"/>
+<ellipse cx="720" cy="320" rx="30" ry="45" fill="#2E7D32"/>
+<ellipse cx="720" cy="295" rx="24" ry="30" fill="#388E3C"/>
+<rect x="717" y="340" width="6" height="15" fill="#5D4037" rx="1"/>
+<circle cx="50" cy="355" r="12" fill="#66BB6A" opacity="0.7"/>
+<circle cx="750" cy="360" r="10" fill="#66BB6A" opacity="0.7"/>
+<rect x="330" y="340" width="140" height="8" fill="#9E9E9E" rx="1"/>
+<line x1="340" y1="348" x2="460" y2="348" stroke="#757575" stroke-width="1" opacity="0.5"/>
+</svg>`,
+
+casa2:`<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="sky2" x1="0" y1="0" x2="0" y2="0.4"><stop offset="0%" stop-color="#5B9BD5"/><stop offset="100%" stop-color="#87CEEB"/></linearGradient>
+<linearGradient id="ground2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6B9B3A"/><stop offset="100%" stop-color="#4A7A2E"/></linearGradient>
+<linearGradient id="wall2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#F8F4EC"/><stop offset="100%" stop-color="#F0E8D8"/></linearGradient>
+<linearGradient id="roof2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6B3410"/><stop offset="100%" stop-color="#4A2510"/></linearGradient>
+<filter id="sh2"><feDropShadow dx="3" dy="5" stdDeviation="4" flood-opacity="0.3"/></filter>
+<filter id="shs"><feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.2"/></filter>
+</defs>
+<rect width="800" height="500" fill="url(#sky2)"/>
+<circle cx="700" cy="70" r="40" fill="#FFFDE7" opacity="0.8"/>
+<ellipse cx="150" cy="50" rx="70" ry="20" fill="white" opacity="0.6"/>
+<ellipse cx="450" cy="35" rx="60" ry="18" fill="white" opacity="0.5"/>
+<rect y="350" width="800" height="150" fill="url(#ground2)"/>
+<rect y="350" width="800" height="6" fill="#4A7A2E"/>
+<rect x="200" y="100" width="400" height="255" fill="url(#wall2)" rx="2" filter="url(#sh2)"/>
+<rect x="200" y="100" width="400" height="8" fill="#D4C5A9"/>
+<line x1="200" y1="227" x2="600" y2="227" stroke="#D4C5A9" stroke-width="3"/>
+<polygon points="180,100 400,25 620,100" fill="url(#roof2)" filter="url(#sh2)"/>
+<polygon points="190,100 400,30 610,100" fill="#8B4513" opacity="0.6"/>
+<g fill="#D6EAF8" stroke="#AED6F1" stroke-width="1.5" filter="url(#shs)">
+<rect x="220" y="115" width="50" height="45" rx="2"/><rect x="285" y="115" width="50" height="45" rx="2"/>
+<rect x="350" y="115" width="50" height="45" rx="2"/><rect x="415" y="115" width="50" height="45" rx="2"/>
+<rect x="480" y="115" width="50" height="45" rx="2"/><rect x="545" y="115" width="50" height="45" rx="2"/>
+<rect x="220" y="245" width="50" height="45" rx="2"/><rect x="285" y="245" width="50" height="45" rx="2"/>
+<rect x="480" y="245" width="50" height="45" rx="2"/><rect x="545" y="245" width="50" height="45" rx="2"/>
+</g>
+<rect x="365" y="250" width="70" height="105" fill="#5D3A1A" rx="3" filter="url(#sh2)"/>
+<circle cx="425" cy="305" r="5" fill="#D4AC0D"/>
+<rect x="120" y="290" width="70" height="65" fill="url(#wall2)" rx="2" filter="url(#sh2)"/>
+<polygon points="110,290 155,250 200,290" fill="url(#roof2)"/>
+<rect x="135" y="305" width="20" height="25" fill="#D6EAF8" rx="1" stroke="#AED6F1" stroke-width="1"/>
+<rect x="610" y="295" width="65" height="60" fill="url(#wall2)" rx="2" filter="url(#sh2)"/>
+<polygon points="602,295 642,258 682,295" fill="url(#roof2)"/>
+<rect x="622" y="310" width="18" height="22" fill="#D6EAF8" rx="1" stroke="#AED6F1" stroke-width="1"/>
+<rect x="648" y="310" width="18" height="22" fill="#D6EAF8" rx="1" stroke="#AED6F1" stroke-width="1"/>
+<ellipse cx="70" cy="320" rx="30" ry="45" fill="#2E7D32"/>
+<ellipse cx="70" cy="290" rx="24" ry="30" fill="#388E3C"/>
+<rect x="67" y="340" width="6" height="18" fill="#5D4037" rx="1"/>
+<ellipse cx="730" cy="325" rx="28" ry="42" fill="#2E7D32"/>
+<ellipse cx="730" cy="298" rx="22" ry="28" fill="#388E3C"/>
+<rect x="180" y="355" width="70" height="14" fill="#BDBDBD" rx="2"/>
+<rect x="550" y="355" width="70" height="14" fill="#BDBDBD" rx="2"/>
+<rect x="340" y="350" width="120" height="8" fill="#9E9E9E" rx="1"/>
+</svg>`,
+
+edificio:`<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="sky3" x1="0" y1="0" x2="0" y2="0.5"><stop offset="0%" stop-color="#4A90D9"/><stop offset="50%" stop-color="#87CEEB"/><stop offset="100%" stop-color="#B0E0E6"/></linearGradient>
+<linearGradient id="bldg" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#E8E8E8"/><stop offset="50%" stop-color="#F5F5F5"/><stop offset="100%" stop-color="#E0E0E0"/></linearGradient>
+<linearGradient id="bldg2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#D5D8DC"/><stop offset="100%" stop-color="#EAECEE"/></linearGradient>
+<linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#AED6F1"/><stop offset="50%" stop-color="#D6EAF8"/><stop offset="100%" stop-color="#85C1E9"/></linearGradient>
+<filter id="sh3"><feDropShadow dx="4" dy="6" stdDeviation="5" flood-opacity="0.25"/></filter>
+</defs>
+<rect width="800" height="500" fill="url(#sky3)"/>
+<ellipse cx="120" cy="40" rx="60" ry="16" fill="white" opacity="0.5"/>
+<ellipse cx="600" cy="30" rx="50" ry="14" fill="white" opacity="0.4"/>
+<rect y="420" width="800" height="80" fill="#808080"/>
+<rect y="420" width="800" height="4" fill="#696969"/>
+<rect x="250" y="50" width="300" height="375" fill="url(#bldg)" rx="4" filter="url(#sh3)"/>
+<rect x="250" y="50" width="300" height="10" fill="#5D6D7E"/>
+<rect x="250" y="50" width="8" height="375" fill="#D5D8DC"/>
+<rect x="542" y="50" width="8" height="375" fill="#D5D8DC"/>
+<rect x="100" y="200" width="140" height="225" fill="url(#bldg2)" rx="3" filter="url(#sh3)"/>
+<rect x="100" y="200" width="140" height="8" fill="#7F8C8D"/>
+<rect x="560" y="180" width="130" height="245" fill="url(#bldg2)" rx="3" filter="url(#sh3)"/>
+<rect x="560" y="180" width="130" height="8" fill="#7F8C8D"/>
+<g fill="url(#glass)" stroke="#85C1E9" stroke-width="0.8">
+<rect x="265" y="70" width="35" height="30" rx="1"/><rect x="310" y="70" width="35" height="30" rx="1"/><rect x="355" y="70" width="35" height="30" rx="1"/><rect x="400" y="70" width="35" height="30" rx="1"/><rect x="445" y="70" width="35" height="30" rx="1"/><rect x="490" y="70" width="35" height="30" rx="1"/>
+<rect x="265" y="110" width="35" height="30" rx="1"/><rect x="310" y="110" width="35" height="30" rx="1"/><rect x="355" y="110" width="35" height="30" rx="1"/><rect x="400" y="110" width="35" height="30" rx="1"/><rect x="445" y="110" width="35" height="30" rx="1"/><rect x="490" y="110" width="35" height="30" rx="1"/>
+<rect x="265" y="150" width="35" height="30" rx="1"/><rect x="310" y="150" width="35" height="30" rx="1"/><rect x="355" y="150" width="35" height="30" rx="1"/><rect x="400" y="150" width="35" height="30" rx="1"/><rect x="445" y="150" width="35" height="30" rx="1"/><rect x="490" y="150" width="35" height="30" rx="1"/>
+<rect x="265" y="190" width="35" height="30" rx="1"/><rect x="310" y="190" width="35" height="30" rx="1"/><rect x="355" y="190" width="35" height="30" rx="1"/><rect x="400" y="190" width="35" height="30" rx="1"/><rect x="445" y="190" width="35" height="30" rx="1"/><rect x="490" y="190" width="35" height="30" rx="1"/>
+<rect x="265" y="230" width="35" height="30" rx="1"/><rect x="310" y="230" width="35" height="30" rx="1"/><rect x="355" y="230" width="35" height="30" rx="1"/><rect x="400" y="230" width="35" height="30" rx="1"/><rect x="445" y="230" width="35" height="30" rx="1"/><rect x="490" y="230" width="35" height="30" rx="1"/>
+<rect x="265" y="270" width="35" height="30" rx="1"/><rect x="310" y="270" width="35" height="30" rx="1"/><rect x="355" y="270" width="35" height="30" rx="1"/><rect x="400" y="270" width="35" height="30" rx="1"/><rect x="445" y="270" width="35" height="30" rx="1"/><rect x="490" y="270" width="35" height="30" rx="1"/>
+<rect x="265" y="310" width="35" height="30" rx="1"/><rect x="310" y="310" width="35" height="30" rx="1"/><rect x="355" y="310" width="35" height="30" rx="1"/><rect x="400" y="310" width="35" height="30" rx="1"/><rect x="445" y="310" width="35" height="30" rx="1"/><rect x="490" y="310" width="35" height="30" rx="1"/>
+<rect x="265" y="350" width="35" height="30" rx="1"/><rect x="310" y="350" width="35" height="30" rx="1"/><rect x="355" y="350" width="35" height="30" rx="1"/><rect x="400" y="350" width="35" height="30" rx="1"/><rect x="445" y="350" width="35" height="30" rx="1"/><rect x="490" y="350" width="35" height="30" rx="1"/>
+</g>
+<rect x="365" y="385" width="70" height="40" fill="#5D3A1A" rx="2"/>
+<g fill="url(#glass)" stroke="#85C1E9" stroke-width="0.8">
+<rect x="115" y="215" width="30" height="25" rx="1"/><rect x="155" y="215" width="30" height="25" rx="1"/><rect x="195" y="215" width="30" height="25" rx="1"/>
+<rect x="115" y="250" width="30" height="25" rx="1"/><rect x="155" y="250" width="30" height="25" rx="1"/><rect x="195" y="250" width="30" height="25" rx="1"/>
+<rect x="115" y="285" width="30" height="25" rx="1"/><rect x="155" y="285" width="30" height="25" rx="1"/><rect x="195" y="285" width="30" height="25" rx="1"/>
+<rect x="115" y="320" width="30" height="25" rx="1"/><rect x="155" y="320" width="30" height="25" rx="1"/><rect x="195" y="320" width="30" height="25" rx="1"/>
+<rect x="115" y="355" width="30" height="25" rx="1"/><rect x="155" y="355" width="30" height="25" rx="1"/><rect x="195" y="355" width="30" height="25" rx="1"/>
+</g>
+<g fill="url(#glass)" stroke="#85C1E9" stroke-width="0.8">
+<rect x="575" y="195" width="28" height="24" rx="1"/><rect x="612" y="195" width="28" height="24" rx="1"/><rect x="649" y="195" width="28" height="24" rx="1"/>
+<rect x="575" y="228" width="28" height="24" rx="1"/><rect x="612" y="228" width="28" height="24" rx="1"/><rect x="649" y="228" width="28" height="24" rx="1"/>
+<rect x="575" y="261" width="28" height="24" rx="1"/><rect x="612" y="261" width="28" height="24" rx="1"/><rect x="649" y="261" width="28" height="24" rx="1"/>
+<rect x="575" y="294" width="28" height="24" rx="1"/><rect x="612" y="294" width="28" height="24" rx="1"/><rect x="649" y="294" width="28" height="24" rx="1"/>
+<rect x="575" y="327" width="28" height="24" rx="1"/><rect x="612" y="327" width="28" height="24" rx="1"/><rect x="649" y="327" width="28" height="24" rx="1"/>
+<rect x="575" y="360" width="28" height="24" rx="1"/><rect x="612" y="360" width="28" height="24" rx="1"/><rect x="649" y="360" width="28" height="24" rx="1"/>
+</g>
+<circle cx="60" cy="400" r="18" fill="#2E7D32"/><rect x="57" y="415" width="6" height="12" fill="#5D4037" rx="1"/>
+<circle cx="740" cy="405" r="16" fill="#2E7D32"/><rect x="737" y="418" width="6" height="10" fill="#5D4037" rx="1"/>
+</svg>`,
+
+galpon:`<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="sky4" x1="0" y1="0" x2="0" y2="0.4"><stop offset="0%" stop-color="#7B8D9E"/><stop offset="100%" stop-color="#B0BEC5"/></linearGradient>
+<linearGradient id="ground4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8D7B68"/><stop offset="100%" stop-color="#6B5B4A"/></linearGradient>
+<linearGradient id="metal" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#BDC3C7"/><stop offset="50%" stop-color="#D5D8DC"/><stop offset="100%" stop-color="#BDC3C7"/></linearGradient>
+<linearGradient id="roof4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7F8C8D"/><stop offset="100%" stop-color="#95A5A6"/></linearGradient>
+<filter id="sh4"><feDropShadow dx="4" dy="6" stdDeviation="5" flood-opacity="0.3"/></filter>
+</defs>
+<rect width="800" height="500" fill="url(#sky4)"/>
+<rect y="370" width="800" height="130" fill="url(#ground4)"/>
+<rect y="370" width="800" height="6" fill="#6B5B4A"/>
+<rect x="80" y="140" width="640" height="235" fill="url(#metal)" rx="2" filter="url(#sh4)"/>
+<rect x="80" y="140" width="640" height="8" fill="#5D6D7E"/>
+<polygon points="55,140 400,50 745,140" fill="url(#roof4)" filter="url(#sh4)"/>
+<line x1="100" y1="140" x2="400" y2="50" stroke="#95A5A6" stroke-width="3" opacity="0.6"/>
+<line x1="700" y1="140" x2="400" y2="50" stroke="#95A5A6" stroke-width="3" opacity="0.6"/>
+<line x1="400" y1="50" x2="400" y2="140" stroke="#95A5A6" stroke-width="2" opacity="0.4"/>
+<line x1="200" y1="140" x2="400" y2="50" stroke="#BDC3C7" stroke-width="1.5" opacity="0.3" stroke-dasharray="10,5"/>
+<line x1="600" y1="140" x2="400" y2="50" stroke="#BDC3C7" stroke-width="1.5" opacity="0.3" stroke-dasharray="10,5"/>
+<rect x="330" y="230" width="140" height="145" fill="#95A5A6" rx="2" stroke="#7F8C8D" stroke-width="2"/>
+<rect x="340" y="240" width="55" height="50" fill="#D6EAF8" rx="1" stroke="#AED6F1" stroke-width="1.5"/>
+<rect x="405" y="240" width="55" height="50" fill="#D6EAF8" rx="1" stroke="#AED6F1" stroke-width="1.5"/>
+<rect x="330" y="300" width="140" height="75" fill="#7F8C8D" rx="1"/>
+<rect x="100" y="160" width="100" height="70" fill="#D5D8DC" rx="1" stroke="#BDC3C7" stroke-width="1.5"/>
+<rect x="100" y="240" width="100" height="70" fill="#D5D8DC" rx="1" stroke="#BDC3C7" stroke-width="1.5"/>
+<rect x="600" y="160" width="100" height="70" fill="#D5D8DC" rx="1" stroke="#BDC3C7" stroke-width="1.5"/>
+<rect x="600" y="240" width="100" height="70" fill="#D5D8DC" rx="1" stroke="#BDC3C7" stroke-width="1.5"/>
+<rect x="50" y="350" width="60" height="25" fill="#4CAF50" rx="1"/>
+<rect x="690" y="350" width="60" height="25" fill="#4CAF50" rx="1"/>
+<rect x="40" y="340" width="8" height="35" fill="#5D4037" rx="2"/>
+<rect x="752" y="340" width="8" height="35" fill="#5D4037" rx="2"/>
+<rect x="750" y="100" width="4" height="45" fill="#7F8C8D"/>
+<rect x="745" y="95" width="14" height="8" fill="#F59E0B" rx="1"/>
+</svg>`
+  };
+
+  const info={
+    casa:'<strong>Casa Moderna - 1 Piso</strong><br><br><strong>Superficie:</strong> ~120 m2 | <strong>Recamaras:</strong> 3 | <strong>Banos:</strong> 2<br><strong>Presupuesto:</strong> $800,000 - $1,500,000 | <strong>Tiempo:</strong> 6-8 meses<br><br>Diseno abierto, cocina integral, sala-comedor, jardin frontal, garage 1 auto, acabados media-alta.',
+    casa2:'<strong>Casa 2 Pisos</strong><br><br><strong>Superficie:</strong> ~180-220 m2 | <strong>Recamaras:</strong> 4 | <strong>Banos:</strong> 3<br><strong>Presupuesto:</strong> $1,500,000 - $3,000,000 | <strong>Tiempo:</strong> 8-12 meses<br><br>Planta baja social, planta alta privada, balcon, mejor aprovechamiento del terreno.',
+    edificio:'<strong>Edificio Residencial 8 Pisos</strong><br><br><strong>Departamentos:</strong> 16-24 | <strong>Estacionamiento:</strong> Sotano<br><strong>Presupuesto:</strong> $5,000,000 - $20,000,000 | <strong>Tiempo:</strong> 18-36 meses<br><br>Concreto armado, elevadores, areas comunes, seguridad 24h, amenidades.',
+    galpon:'<strong>Galpon Industrial</strong><br><br><strong>Superficie:</strong> 500-2000 m2 | <strong>Altura:</strong> 6-10m libre<br><strong>Presupuesto:</strong> $500,000 - $3,000,000 | <strong>Tiempo:</strong> 3-6 meses<br><br>Estructura metalica, piso industrial, ventilacion natural, rapida construccion.'
+  };
+  render.innerHTML=renders[type]||'';
+  info.innerHTML=info[type]||'';
+}
+document.getElementById('previewOverlay').addEventListener('click',function(e){if(e.target===this)closePreview();});
+</script>
+</body>
+</html>
