@@ -655,14 +655,14 @@ galpon:`<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
 </svg>`
   };
 
-  const info={
+  const previewData={
     casa:'<strong>Casa Moderna - 1 Piso</strong><br><br><strong>Superficie:</strong> ~120 m2 | <strong>Recamaras:</strong> 3 | <strong>Banos:</strong> 2<br><strong>Presupuesto:</strong> $800,000 - $1,500,000 | <strong>Tiempo:</strong> 6-8 meses<br><br>Diseno abierto, cocina integral, sala-comedor, jardin frontal, garage 1 auto, acabados media-alta.',
     casa2:'<strong>Casa 2 Pisos</strong><br><br><strong>Superficie:</strong> ~180-220 m2 | <strong>Recamaras:</strong> 4 | <strong>Banos:</strong> 3<br><strong>Presupuesto:</strong> $1,500,000 - $3,000,000 | <strong>Tiempo:</strong> 8-12 meses<br><br>Planta baja social, planta alta privada, balcon, mejor aprovechamiento del terreno.',
     edificio:'<strong>Edificio Residencial 8 Pisos</strong><br><br><strong>Departamentos:</strong> 16-24 | <strong>Estacionamiento:</strong> Sotano<br><strong>Presupuesto:</strong> $5,000,000 - $20,000,000 | <strong>Tiempo:</strong> 18-36 meses<br><br>Concreto armado, elevadores, areas comunes, seguridad 24h, amenidades.',
     galpon:'<strong>Galpon Industrial</strong><br><br><strong>Superficie:</strong> 500-2000 m2 | <strong>Altura:</strong> 6-10m libre<br><strong>Presupuesto:</strong> $500,000 - $3,000,000 | <strong>Tiempo:</strong> 3-6 meses<br><br>Estructura metalica, piso industrial, ventilacion natural, rapida construccion.'
   };
   render.innerHTML=renders[type]||'';
-  info.innerHTML=info[type]||'';
+  info.innerHTML=previewData[type]||'';
 }
 document.getElementById('previewOverlay').addEventListener('click',function(e){if(e.target===this)closePreview();});
 </script>
