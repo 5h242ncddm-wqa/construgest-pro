@@ -90,7 +90,7 @@
   <div style="font-size:1.1rem;font-weight:600;color:#f8fafc">ConstruGest Pro</div>
   <div style="font-size:0.85rem;color:#94a3b8">Cargando...</div>
 </div>
-<script>setTimeout(()=>{const o=document.getElementById('loadingOverlay');o.style.opacity='0';setTimeout(()=>o.style.display='none',500)},1000)</script>
+<script>setTimeout(()=>{const o=document.getElementById('loadingOverlay');o.style.opacity='0';o.style.pointerEvents='none';setTimeout(()=>o.style.display='none',500)},1000)</script>
 
 <div id="toast" class="toast"></div>
 
