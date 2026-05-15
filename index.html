@@ -91,6 +91,7 @@
   <div style="font-size:1.1rem;font-weight:600;color:#f8fafc">ConstruGest IDE AI</div>
   <div style="font-size:0.85rem;color:#94a3b8">Cargando...</div>
 </div>
+<script>setTimeout(()=>{const o=document.getElementById('loadingOverlay');o.style.opacity='0';setTimeout(()=>o.style.display='none',500)},1000)</script>
 
 <div id="toast" class="toast"></div>
 
@@ -355,7 +356,6 @@ function login(){
     $('avatarUser').textContent=u.charAt(0).toUpperCase();
     $('settingsUser').textContent='Usuario actual: '+u;
     cargarDatos();
-    setTimeout(()=>{$('loadingOverlay').style.opacity='0';setTimeout(()=>$('loadingOverlay').style.display='none',500)},300);
   }else showToast('Datos incorrectos','error');
 }
 function logout(){
@@ -363,7 +363,6 @@ function logout(){
   $('loginScreen').style.display='flex';
   $('appContainer').style.display='none';
   $('usuario').value='';$('password').value='';
-  $('loadingOverlay').style.display='flex';$('loadingOverlay').style.opacity='1';
 }
 
 // NAV
