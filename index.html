@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ConstruGest IDE AI</title>
+  <title>ConstruGest Pro - Gestor Inteligente de Obra</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@monaco-editor/loader@1.4.0/lib/amd/index.min.js"></script>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='15' y='40' width='70' height='45' rx='3' fill='%23F59E0B'/><rect x='28' y='52' width='12' height='12' rx='1' fill='white'/><rect x='44' y='52' width='12' height='12' rx='1' fill='white'/><rect x='60' y='52' width='12' height='12' rx='1' fill='white'/><rect x='38' y='70' width='24' height='15' rx='2' fill='white'/><polygon points='50,10 8,44 92,44' fill='%23F97316'/><rect x='42' y='22' width='16' height='22' fill='%23FBBF24' rx='2'/></svg>">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="theme-color" content="#0f172a">
@@ -88,7 +87,7 @@
 
 <div id="loadingOverlay">
   <div class="loader"></div>
-  <div style="font-size:1.1rem;font-weight:600;color:#f8fafc">ConstruGest IDE AI</div>
+  <div style="font-size:1.1rem;font-weight:600;color:#f8fafc">ConstruGest Pro</div>
   <div style="font-size:0.85rem;color:#94a3b8">Cargando...</div>
 </div>
 <script>setTimeout(()=>{const o=document.getElementById('loadingOverlay');o.style.opacity='0';setTimeout(()=>o.style.display='none',500)},1000)</script>
@@ -107,8 +106,8 @@
         <rect x="38" y="70" width="24" height="15" rx="2" fill="white"/>
         <polygon points="50,10 8,44 92,44" fill="#F97316"/>
       </svg>
-      <h1 class="text-2xl font-bold text-white">ConstruGest IDE AI</h1>
-      <p class="text-slate-400 text-sm mt-1">IDE Inteligente para Gestión de Obra</p>
+      <h1 class="text-2xl font-bold text-white">ConstruGest Pro</h1>
+      <p class="text-slate-400 text-sm mt-1">Gestor Inteligente de Obra</p>
     </div>
     <div class="card p-8">
       <div class="grid grid-cols-2 gap-3 mb-6">
@@ -143,8 +142,8 @@
         <polygon points="50,10 8,44 92,44" fill="#F97316"/>
       </svg>
       <div>
-        <div class="font-bold text-sm text-white logo-text">ConstruGest IDE</div>
-        <div class="text-xs text-primary">AI v2.0</div>
+        <div class="font-bold text-sm text-white logo-text">ConstruGest Pro</div>
+        <div class="text-xs text-primary">IA v2.0</div>
       </div>
     </div>
     <nav class="flex-1 p-3 space-y-1" id="sidebarNav">
@@ -172,9 +171,9 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 014 4c0 2-2 4-4 4s-4-2-4-4 2-4 4-4z"/><path d="M2 22c0-4 4.5-7 10-7s10 3 10 7"/><path d="M18 14l2-2 2 2-2 2-2-2z"/></svg>
         <span>Constru IA</span>
       </div>
-      <div class="sidebar-item" onclick="navigateTo('editor')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-        <span>Editor</span>
+      <div class="sidebar-item" onclick="navigateTo('galeria')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Galería</span>
       </div>
       <div class="sidebar-item" onclick="navigateTo('settings')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
@@ -287,21 +286,27 @@
               <div class="flex items-center gap-2"><span class="font-semibold">Resultado</span></div>
               <button class="btn btn-success text-xs py-1 px-3" onclick="agregarComoHitosAI()" id="aiAddHitosBtn" style="display:none">+ Agregar como hitos</button>
             </div>
-            <div id="aiResult" class="text-text-muted text-sm overflow-y-auto" style="height:calc(100% - 40px)">La IA responderá aquí con código, planes y análisis...</div>
+            <div id="aiResult" class="text-text-muted text-sm overflow-y-auto" style="height:calc(100% - 40px)">La IA responderá con imágenes, planes y análisis...</div>
           </div>
         </div>
       </div>
 
-      <!-- CODE EDITOR -->
-      <div class="page" id="page-editor">
-        <div class="flex justify-between items-center mb-4"><h1 class="text-xl font-bold text-white">Editor de Código</h1>
-          <div class="flex gap-2">
-            <select class="select w-40" id="editorLang" onchange="changeEditorLang()"><option value="javascript">JavaScript</option><option value="typescript">TypeScript</option><option value="html">HTML</option><option value="css">CSS</option><option value="python">Python</option><option value="sql">SQL</option><option value="json">JSON</option></select>
-            <button class="btn btn-success" onclick="runCode()">▶ Ejecutar</button>
-          </div>
+      <!-- GALERIA -->
+      <div class="page" id="page-galeria">
+        <div class="flex justify-between items-center mb-6">
+          <h1 class="text-xl font-bold text-white">Galería de Obra</h1>
+          <label class="btn btn-primary cursor-pointer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            Subir Archivos
+            <input type="file" id="fileInput" multiple accept="image/*,.pdf,.doc,.docx,.xlsx" style="display:none" onchange="subirArchivos(event)">
+          </label>
         </div>
-        <div class="card p-0 overflow-hidden" style="height:calc(100vh - 200px)"><div id="monacoContainer" style="width:100%;height:100%"></div></div>
-        <div class="card mt-4" id="consoleOutput" style="display:none"><h3 class="font-semibold mb-2 text-sm">Consola</h3><pre class="text-sm text-success" id="consoleText"></pre></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6" id="galeriaGrid"></div>
+        <div class="card text-center text-text-muted py-8" id="galeriaEmpty">Sube fotos y archivos para ver el progreso de cada obra aquí</div>
+        <!-- Modal de imagen ampliada -->
+        <div id="imgModal" class="fixed inset-0 bg-black/80 z-[999] flex items-center justify-center p-4" style="display:none" onclick="if(event.target===this)document.getElementById('imgModal').style.display='none'">
+          <div class="max-w-4xl w-full"><img id="imgModalContent" class="w-full rounded-xl" style="max-height:85vh;object-fit:contain"></div>
+        </div>
       </div>
 
       <!-- SETTINGS -->
@@ -323,10 +328,8 @@
 <script>
 // == INIT ==
 let hitos=[],hitosFiltrados=[],usuarioActual=null,editandoId=null,paginaActual='dashboard';
-let proyectos=[],materiales=[],empleados=[];
+let proyectos=[],materiales=[],empleados=[],fotos=[];
 let aiSugerencias=[];
-let monacoEditor=null;
-let currentAIView='plan';
 
 function $(id){return document.getElementById(id)}
 
@@ -371,7 +374,7 @@ function navigateTo(page){
   document.querySelectorAll('.sidebar-item').forEach(i=>i.classList.remove('active'));
   $('page-'+page).classList.add('active');
   const items=document.querySelectorAll('.sidebar-item');
-  const idx=['dashboard','projects','milestones','materials','employees','ai','editor','settings'].indexOf(page);
+  const idx=['dashboard','projects','milestones','materials','employees','galeria','ai','settings'].indexOf(page);
   if(idx>=0)items[idx].classList.add('active');
   paginaActual=page;
   if(page==='milestones')aplicarFiltros();
@@ -379,8 +382,8 @@ function navigateTo(page){
   if(page==='projects')renderProjects();
   if(page==='materials')renderMaterials();
   if(page==='employees')renderEmployees();
+  if(page==='galeria')renderGaleria();
   if(page==='ai')initAI();
-  if(page==='editor')initEditor();
 }
 
 function toggleMobileMenu(){
@@ -398,6 +401,7 @@ function cargarDatos(){
   const dp=localStorage.getItem('proyectos_'+usuarioActual);proyectos=dp?JSON.parse(dp):[];
   const dm=localStorage.getItem('materiales_'+usuarioActual);materiales=dm?JSON.parse(dm):[];
   const de=localStorage.getItem('empleados_'+usuarioActual);empleados=de?JSON.parse(de):[];
+  const df=localStorage.getItem('fotos_'+usuarioActual);fotos=df?JSON.parse(df):[];
   aplicarFiltros();actualizarDash();
 }
 function guardarDatos(){
@@ -405,6 +409,7 @@ function guardarDatos(){
   localStorage.setItem('proyectos_'+usuarioActual,JSON.stringify(proyectos));
   localStorage.setItem('materiales_'+usuarioActual,JSON.stringify(materiales));
   localStorage.setItem('empleados_'+usuarioActual,JSON.stringify(empleados));
+  localStorage.setItem('fotos_'+usuarioActual,JSON.stringify(fotos));
 }
 
 // DASHBOARD
@@ -500,80 +505,45 @@ function showEmployeeForm(){
   openModal('<h2 class="font-bold text-lg mb-4">Nuevo Empleado</h2><div class="grid grid-cols-2 gap-3"><input class="input" id="empNombre" placeholder="Nombre"><input class="input" id="empCargo" placeholder="Cargo"><input class="input" id="empSalario" placeholder="Salario" type="number"><input class="input" id="empAsistencia" placeholder="% Asistencia"></div><div class="flex gap-3 mt-4"><button class="btn btn-primary flex-1 justify-center" onclick="{const n=$(\'empNombre\').value.trim();if(!n)return showToast(\'Nombre requerido\',\'error\');empleados.push({id:Date.now(),nombre:n,cargo:$(\'empCargo\').value,salario:parseFloat($(\'empSalario\').value)||0,asistencia:$(\'empAsistencia\').value||\'100%\'});guardarDatos();renderEmployees();closeModal();showToast(\'Empleado agregado\',\'success\')}">Agregar</button><button class="btn btn-ghost flex-1 justify-center" onclick="closeModal()">Cancelar</button></div>');
 }
 
-// AI ASSISTANT - MEJORADO
+// AI ASSISTANT WITH IMAGE GENERATION
+const svgRenders={
+  casa:'<svg viewBox="0 0 600 380" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="0.4"><stop offset="0%" stop-color="#4A90D9"/><stop offset="100%" stop-color="#87CEEB"/></linearGradient><linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5B8C3E"/><stop offset="100%" stop-color="#3D6B2E"/></linearGradient><linearGradient id="wall" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#F5F0E8"/><stop offset="100%" stop-color="#EDE6D8"/></linearGradient><linearGradient id="roof" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8B4513"/><stop offset="100%" stop-color="#6B3410"/></linearGradient></defs><rect width="600" height="380" fill="url(#sky)"/><circle cx="520" cy="60" r="40" fill="#FFFDE7" opacity="0.7"/><ellipse cx="150" cy="45" rx="60" ry="18" fill="white" opacity="0.5"/><rect y="260" width="600" height="120" fill="url(#ground)"/><rect y="260" width="600" height="6" fill="#4A7A2E"/><rect x="120" y="110" width="360" height="155" fill="url(#wall)" rx="2"/><polygon points="95,110 300,30 505,110" fill="url(#roof)"/><rect x="155" y="145" width="60" height="55" fill="#D6EAF8" rx="2" stroke="#AED6F1" stroke-width="2"/><line x1="185" y1="145" x2="185" y2="200"/><line x1="155" y1="172" x2="215" y2="172"/><rect x="385" y="145" width="60" height="55" fill="#D6EAF8" rx="2" stroke="#AED6F1" stroke-width="2"/><line x1="415" y1="145" x2="415" y2="200"/><line x1="385" y1="172" x2="445" y2="172"/><rect x="270" y="170" width="60" height="95" fill="#5D3A1A" rx="3"/><circle cx="318" cy="222" r="4" fill="#D4AC0D"/><rect x="60" y="210" width="55" height="55" fill="url(#wall)" rx="2"/><polygon points="50,210 87,175 125,210" fill="url(#roof)"/><rect x="72" y="225" width="16" height="20" fill="#D6EAF8" rx="1"/><rect x="485" y="220" width="50" height="45" fill="url(#wall)" rx="2"/><polygon points="478,220 510,188 542,220" fill="url(#roof)"/><ellipse cx="55" cy="240" rx="25" ry="35" fill="#2E7D32"/><rect x="52" y="265" width="6" height="15" fill="#5D4037" rx="1"/><ellipse cx="545" cy="248" rx="22" ry="32" fill="#2E7D32"/><rect x="543" y="270" width="5" height="13" fill="#5D4037" rx="1"/><rect x="270" y="260" width="60" height="8" fill="#9E9E9E" rx="1"/></svg>',
+  casa2:'<svg viewBox="0 0 600 380" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sky2" x1="0" y1="0" x2="0" y2="0.4"><stop offset="0%" stop-color="#5B9BD5"/><stop offset="100%" stop-color="#87CEEB"/></linearGradient><linearGradient id="ground2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6B9B3A"/><stop offset="100%" stop-color="#4A7A2E"/></linearGradient><linearGradient id="wall2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#F8F4EC"/><stop offset="100%" stop-color="#F0E8D8"/></linearGradient><linearGradient id="roof2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6B3410"/><stop offset="100%" stop-color="#4A2510"/></linearGradient></defs><rect width="600" height="380" fill="url(#sky2)"/><circle cx="530" cy="55" r="35" fill="#FFFDE7" opacity="0.7"/><rect y="270" width="600" height="110" fill="url(#ground2)"/><rect y="270" width="600" height="5" fill="#4A7A2E"/><rect x="130" y="60" width="340" height="215" fill="url(#wall2)" rx="2"/><line x1="130" y1="167" x2="470" y2="167" stroke="#D4C5A9" stroke-width="3"/><polygon points="110,60 300,10 490,60" fill="url(#roof2)"/><g fill="#D6EAF8" stroke="#AED6F1" stroke-width="1.5"><rect x="145" y="75" width="42" height="38" rx="2"/><rect x="200" y="75" width="42" height="38" rx="2"/><rect x="255" y="75" width="42" height="38" rx="2"/><rect x="310" y="75" width="42" height="38" rx="2"/><rect x="365" y="75" width="42" height="38" rx="2"/><rect x="145" y="180" width="42" height="38" rx="2"/><rect x="200" y="180" width="42" height="38" rx="2"/><rect x="365" y="180" width="42" height="38" rx="2"/><rect x="420" y="180" width="42" height="38" rx="2"/></g><rect x="280" y="185" width="55" height="90" fill="#5D3A1A" rx="3"/><circle cx="322" cy="235" r="4" fill="#D4AC0D"/><rect x="80" y="220" width="55" height="55" fill="url(#wall2)" rx="2"/><polygon points="70,220 107,182 145,220" fill="url(#roof2)"/><rect x="93" y="235" width="16" height="20" fill="#D6EAF8" rx="1"/><rect x="470" y="225" width="50" height="50" fill="url(#wall2)" rx="2"/><polygon points="462,225 495,190 528,225" fill="url(#roof2)"/><ellipse cx="55" cy="250" rx="22" ry="32" fill="#2E7D32"/><rect x="52" y="275" width="5" height="14" fill="#5D4037"/><ellipse cx="545" cy="258" rx="20" ry="30" fill="#2E7D32"/><rect x="543" y="282" width="5" height="12" fill="#5D4037"/><rect x="270" y="270" width="60" height="7" fill="#9E9E9E" rx="1"/></svg>',
+  edificio:'<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sky3" x1="0" y1="0" x2="0" y2="0.5"><stop offset="0%" stop-color="#4A90D9"/><stop offset="100%" stop-color="#B0E0E6"/></linearGradient><linearGradient id="bldg" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#D5D8DC"/><stop offset="50%" stop-color="#F5F5F5"/><stop offset="100%" stop-color="#D5D8DC"/></linearGradient><linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#AED6F1"/><stop offset="100%" stop-color="#85C1E9"/></linearGradient></defs><rect width="600" height="400" fill="url(#sky3)"/><rect y="340" width="600" height="60" fill="#808080"/><rect x="180" y="30" width="240" height="315" fill="url(#bldg)" rx="3"/><rect x="180" y="30" width="240" height="8" fill="#5D6D7E"/><rect x="70" y="160" width="100" height="185" fill="#EAECEE" rx="3"/><rect x="430" y="140" width="100" height="205" fill="#EAECEE" rx="3"/><g fill="url(#glass)" stroke="#85C1E9" stroke-width="0.8">{[0,1,2,3,4,5,6,7,8].map(i=>'<rect x="195" y="'+(48+i*32)+'" width="30" height="26" rx="1"/><rect x="235" y="'+(48+i*32)+'" width="30" height="26" rx="1"/><rect x="275" y="'+(48+i*32)+'" width="30" height="26" rx="1"/><rect x="315" y="'+(48+i*32)+'" width="30" height="26" rx="1"/><rect x="355" y="'+(48+i*32)+'" width="30" height="26" rx="1"/>').join('')}</g><rect x="275" y="310" width="50" height="35" fill="#5D3A1A" rx="2"/><g fill="url(#glass)" stroke="#85C1E9" stroke-width="0.8">{[0,1,2,3,4].map(i=>'<rect x="80" y="'+(172+i*32)+'" width="24" height="24" rx="1"/><rect x="115" y="'+(172+i*32)+'" width="24" height="24" rx="1"/>').join('')}</g><g fill="url(#glass)" stroke="#85C1E9" stroke-width="0.8">{[0,1,2,3,4].map(i=>'<rect x="442" y="'+(152+i*32)+'" width="22" height="22" rx="1"/><rect x="476" y="'+(152+i*32)+'" width="22" height="22" rx="1"/>').join('')}</g><ellipse cx="45" cy="325" rx="14" ry="20" fill="#2E7D32"/><ellipse cx="555" cy="330" rx="13" ry="18" fill="#2E7D32"/></svg>',
+  galpon:'<svg viewBox="0 0 600 380" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sky4" x1="0" y1="0" x2="0" y2="0.4"><stop offset="0%" stop-color="#7B8D9E"/><stop offset="100%" stop-color="#B0BEC5"/></linearGradient><linearGradient id="ground4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8D7B68"/><stop offset="100%" stop-color="#6B5B4A"/></linearGradient><linearGradient id="metal" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#BDC3C7"/><stop offset="50%" stop-color="#D5D8DC"/><stop offset="100%" stop-color="#BDC3C7"/></linearGradient><linearGradient id="roof4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7F8C8D"/><stop offset="100%" stop-color="#95A5A6"/></linearGradient></defs><rect width="600" height="380" fill="url(#sky4)"/><rect y="280" width="600" height="100" fill="url(#ground4)"/><rect y="280" width="600" height="5" fill="#6B5B4A"/><rect x="40" y="100" width="520" height="185" fill="url(#metal)" rx="2"/><polygon points="20,100 300,20 580,100" fill="url(#roof4)"/><line x1="60" y1="100" x2="300" y2="20" stroke="#95A5A6" stroke-width="3" opacity="0.6"/><line x1="540" y1="100" x2="300" y2="20" stroke="#95A5A6" stroke-width="3" opacity="0.6"/><line x1="300" y1="20" x2="300" y2="100" stroke="#95A5A6" stroke-width="2" opacity="0.4"/><rect x="245" y="170" width="110" height="115" fill="#95A5A6" rx="2" stroke="#7F8C8D" stroke-width="2"/><rect x="255" y="178" width="42" height="38" fill="#D6EAF8" rx="1" stroke="#AED6F1" stroke-width="1.5"/><rect x="305" y="178" width="42" height="38" fill="#D6EAF8" rx="1" stroke="#AED6F1" stroke-width="1.5"/><rect x="245" y="225" width="110" height="60" fill="#7F8C8D" rx="1"/><rect x="55" y="120" width="80" height="55" fill="#D5D8DC" rx="1" stroke="#BDC3C7" stroke-width="1.5"/><rect x="465" y="120" width="80" height="55" fill="#D5D8DC" rx="1" stroke="#BDC3C7" stroke-width="1.5"/><rect x="30" y="265" width="50" height="20" fill="#4CAF50" rx="1"/><rect x="520" y="265" width="50" height="20" fill="#4CAF50" rx="1"/></svg>'
+};
+
 const aiKnowledge={
-  planificar:casa=>`## Plan de Casa Detallado
-  
-Superficie total: ~126 m² | Presupuesto estimado: $1,512,000 | Tiempo: 8-10 meses
-
-### Distribución
-- **Sala Principal** - 20 m² - Ventanal, porcelanato
-- **Cocina Integral** - 10.5 m² - Isla central, granito
-- **Comedor** - 10.5 m² - 6 personas
-- **Recámara Principal** - 18 m² - Baño completo, closet
-- **Recámara 2** - 12.3 m² - Closet empotrado
-- **Recámara 3** - 10.5 m² - Estudio/huéspedes
-- **Baños** - 9 m² - Principal + secundario
-- **Garage** - 18 m² - 1 auto + taller
-- **Jardín** - 12 m²
-
-### Fases de Construcción
-1. Permisos y estudios (45 días)
-2. Cimentación (19 días)  
-3. Estructura (40 días)
-4. Instalaciones (25 días)
-5. Acabados (41 días)
-6. Exteriores (16 días)
-
-\`\`\`json
-{
-  "superficie": 126,
-  "presupuesto": 1512000,
-  "recamaras": 3,
-  "banos": 2,
-  "tiempo_meses": 9
-}
-\`\`\``,
+  planificar:q=>{
+    const tipo=q.includes('2')?'casa2':q.includes('edificio')||q.includes('departamento')?'edificio':q.includes('galpon')||q.includes('industrial')||q.includes('bodega')?'galpon':'casa';
+    const info={
+      casa:'**Casa Moderna 1 Piso** - 3 recámaras, 2 baños, ~120m², $800,000-$1,500,000, 6-8 meses.',
+      casa2:'**Casa 2 Pisos** - 4 recámaras, 3 baños, ~200m², $1,500,000-$3,000,000, 8-12 meses.',
+      edificio:'**Edificio Residencial** - 8 pisos, 16-24 deptos, $5,000,000-$20,000,000, 18-36 meses.',
+      galpon:'**Galpón Industrial** - 500-2000m², altura 6-10m, $500,000-$3,000,000, 3-6 meses.'
+    };
+    return '<div style="margin-bottom:16px">'+info[tipo]+'</div><div style="border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.3)"><div style="background:linear-gradient(180deg,#87CEEB,#B0E0E6 35%,#90EE90 35%,#228B22 100%)">'+svgRenders[tipo]+'</div></div><div style="margin-top:12px;padding:12px;background:#1e293b;border-radius:8px;font-size:0.82rem"><strong>📐 Vista generada por Constru IA</strong><br>Render arquitectónico generado según los parámetros solicitados.</div>';
+  },
   presupuesto:()=>{
     const c=hitos.filter(h=>parseFloat(h.presupuesto)>0),pt=c.reduce((s,h)=>s+parseFloat(h.presupuesto),0),ej=c.filter(h=>h.estado==='Completado').reduce((s,h)=>s+parseFloat(h.presupuesto),0);
-    return `## Análisis de Presupuesto
-
-**Total planificado:** $${pt.toLocaleString()}
-**Ejecutado:** $${ej.toLocaleString()}
-**Pendiente:** $${(pt-ej).toLocaleString()}
-**Progreso financiero:** ${pt>0?Math.round(ej/pt*100):0}%
-
-### Recomendaciones
-${ej/pt<0.3?'- Fase inicial. Revisa costos de materiales.\n- Negocia con proveedores descuentos por volumen.':ej/pt<0.7?'- Seguimiento adecuado.\n- Considera ajustar partidas pendientes.':'- Mayoría ejecutada. Prepara cierre financiero.'}`;
+    return `**Análisis de Presupuesto**\n\n**Total planificado:** $${pt.toLocaleString()}\n**Ejecutado:** $${ej.toLocaleString()}\n**Pendiente:** $${(pt-ej).toLocaleString()}\n**Progreso financiero:** ${pt>0?Math.round(ej/pt*100):0}%\n\n${ej/pt<0.3?'📋 Fase inicial. Revisa costos de materiales.':ej/pt<0.7?'🔧 Seguimiento adecuado.':`✅ Mayoría ejecutada.`}`;
   },
-  materiales:()=>`## Guía Rápida de Materiales
-
-| Material | Precio | Rendimiento |
-|---|---|---|
-| Cemento 50kg | $180-250 | 0.5 m³ concreto |
-| Arena | $200-350/m³ | 15 m² aplanado |
-| Varilla 1/2" | $250-380 | 16.3 kg/12m |
-| Block | $12-18/pza | 12.5 pzas/m² |
-| Piso cerámico | $120-350/m² | +5% desperdicio |
-| Pintura 19L | $600-1200 | 60-70 m² (2 capas) |
-| Calentador solar | $8000-15000 | 10-15 años vida |
-| Tinaco 1100L | $2500-4500 | Rotoplas |
-
-**Cálculo rápido:** Concreto f'c200: 7 sacos + 0.56m³ arena + 0.84m³ grava por m³.`,
-  codigo:lang=>{
-    const codes={
-      javascript:'// Componente React para tabla de hitos\nfunction MilestoneTable({ milestones, onProgress }) {\n  return (\n    <div className="overflow-x-auto">\n      <table className="w-full border-collapse">\n        <thead>\n          <tr className="bg-gray-100">\n            <th className="p-3 text-left">Nombre</th>\n            <th className="p-3 text-left">Estado</th>\n            <th className="p-3 text-left">Progreso</th>\n            <th className="p-3 text-left">Acciones</th>\n          </tr>\n        </thead>\n        <tbody>\n          {milestones.map(m => (\n            <tr key={m.id} className="border-t hover:bg-gray-50">\n              <td className="p-3">{m.title}</td>\n              <td className="p-3">\n                <span className={\`px-2 py-1 rounded text-xs font-medium \${m.status === "completed" ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800"}\`}>\n                  {m.status}\n                </span>\n              </td>\n              <td className="p-3">\n                <div className="w-full bg-gray-200 rounded h-2">\n                  <div className="bg-blue-500 h-2 rounded" style={{width: m.progress + "%"}}></div>\n                </div>\n              </td>\n              <td className="p-3">\n                <button onClick={() => onProgress(m.id)} className="text-blue-600 hover:underline">\n                  Avanzar\n                </button>\n              </td>\n            </tr>\n          ))}\n        </tbody>\n      </table>\n    </div>\n  );\n}',
-      sql:'-- Esquema SQL para gestión de obra\n\nCREATE TABLE users (\n  id SERIAL PRIMARY KEY,\n  name VARCHAR(100) NOT NULL,\n  email VARCHAR(255) UNIQUE NOT NULL,\n  password VARCHAR(255) NOT NULL,\n  role VARCHAR(20) DEFAULT \'user\',\n  created_at TIMESTAMP DEFAULT NOW()\n);\n\nCREATE TABLE projects (\n  id SERIAL PRIMARY KEY,\n  name VARCHAR(200) NOT NULL,\n  client VARCHAR(200),\n  location VARCHAR(300),\n  budget DECIMAL(12,2),\n  status VARCHAR(20) DEFAULT \'activo\',\n  start_date DATE,\n  end_date DATE,\n  user_id INTEGER REFERENCES users(id)\n);\n\nCREATE TABLE milestones (\n  id SERIAL PRIMARY KEY,\n  project_id INTEGER REFERENCES projects(id) ON DELETE CASCADE,\n  title VARCHAR(200) NOT NULL,\n  description TEXT,\n  progress INTEGER DEFAULT 0,\n  status VARCHAR(20) DEFAULT \'pendiente\',\n  priority VARCHAR(10) DEFAULT \'media\',\n  deadline DATE,\n  assigned_to VARCHAR(100)\n);',
-      python:`# API con FastAPI para gestión de obra\nfrom fastapi import FastAPI, HTTPException\nfrom pydantic import BaseModel\nfrom typing import Optional\nimport uvicorn\n\napp = FastAPI(title="ConstruGest API")\n\nclass Project(BaseModel):\n    name: str\n    client: Optional[str] = None\n    location: Optional[str] = None\n    budget: Optional[float] = None\n\nprojects_db = []\n\n@app.get("/")\ndef root():\n    return {"message": "ConstruGest API v1.0"}\n\n@app.post("/api/projects")\ndef create_project(project: Project):\n    data = project.dict()\n    data["id"] = len(projects_db) + 1\n    data["status"] = "activo"\n    projects_db.append(data)\n    return data\n\n@app.get("/api/projects")\ndef get_projects():\n    return projects_db\n\n@app.get("/api/stats")\ndef get_stats():\n    total = len(projects_db)\n    active = len([p for p in projects_db if p["status"] == "activo"])\n    total_budget = sum(p.get("budget", 0) or 0 for p in projects_db)\n    return {"total": total, "active": active, "total_budget": total_budget}\n\nif __name__ == "__main__":\n    uvicorn.run(app, host="0.0.0.0", port=8000)\n`
-    };
-    return '## Código Generado por Constru IA\n\nA continuación, el editor ha cargado el siguiente código:\n\n```'+lang+'\n'+(codes[lang]||codes.javascript)+'\n```\n\nEste código es funcional. Puedes probarlo directamente en el **Editor** de la aplicación.';
-  }
+  materiales:()=>`**Guía de Materiales**\n\n| Material | Precio | Rendimiento |\n|---|---|---|\n| Cemento 50kg | \\$180-250 | 0.5m³ concreto |\n| Arena | \\$200-350/m³ | 15m² aplanado |\n| Varilla 1/2" | \\$250-380 | 16.3kg/12m |\n| Block | \\$12-18/pza | 12.5 pzas/m² |\n| Piso cerámico | \\$120-350/m² | +5% desperdicio |\n| Pintura 19L | \\$600-1200 | 60-70m² (2 capas) |\n\n**Cálculo rápido:** Concreto f\\'c200: 7 sacos + 0.56m³ arena + 0.84m³ grava por m³.`
 };
+
+function generateSVGImage(query){
+  const l=query.toLowerCase();
+  if(l.includes('casa')&&(l.includes('2')||l.includes('dos')))return svgRenders.casa2;
+  if(l.includes('edificio')||l.includes('departamento')||l.includes('torre'))return svgRenders.edificio;
+  if(l.includes('galpon')||l.includes('galpón')||l.includes('industrial')||l.includes('bodega'))return svgRenders.galpon;
+  if(l.includes('casa')||l.includes('vivienda')||l.includes('hogar')||l.includes('chalet'))return svgRenders.casa;
+  return svgRenders.casa;
+}
 
 function initAI(){
   const c=$('aiMessages');
   if(!c.children.length){
-    c.innerHTML='<div class="ai-msg bot">🤖 Hola, soy **Constru IA**. Puedo ayudarte con:\n\n• Planificar casas y proyectos\n• Calcular presupuestos\n• Precios de materiales\n• Generar código (React, SQL, Python, APIs)\n• Analizar tu proyecto\n\n¿Qué necesitas?</div>';
+    c.innerHTML='<div class="ai-msg bot">🤖 Hola, soy **Constru IA**. Puedo ayudarte con:\n\n• 🏗️ **"Dibuja una casa"** - Genera imágenes realistas\n• 📐 **"Planificar"** - Planos detallados\n• 💰 **"Presupuesto"** - Análisis de costos\n• 🧱 **"Materiales"** - Precios y rendimientos\n• 📊 **"Analizar"** - Resumen del proyecto\n\n¿Qué necesitas?</div>';
   }
 }
 
@@ -597,17 +567,17 @@ function sendAiMessage(){
 
 function processAI(q){
   const l=q.toLowerCase();
-  if(l.includes('planificar')||l.includes('casa'))return aiKnowledge.planificar();
-  if(l.includes('presupuesto')||l.includes('costo')||l.includes('budget'))return aiKnowledge.presupuesto();
-  if(l.includes('material')||l.includes('precio'))return aiKnowledge.materiales();
-  if(l.includes('codigo')||l.includes('código')||l.includes('code')||l.includes('componente')||l.includes('api')){
-    const lang=l.includes('sql')?'sql':l.includes('python')?'python':l.includes('react')||l.includes('javascript')||l.includes('js')?'javascript':'javascript';
-    const code=aiKnowledge.codigo(lang);
-    if(monacoEditor)monacoEditor.setValue(code.match(/```\w+\n([\s\S]*?)```/)?.[1]||code);
-    return code;
+  if(l.includes('dibuja')||l.includes('dibujar')||l.includes('genera')||l.includes('imagen')||l.includes('render')||l.includes('muestra')||l.includes('visualizar')||l.includes('como se ve')||l.includes('foto')||l.includes('ilustra')){
+    return '<div style="margin-bottom:12px">🎨 **Imagen generada por Constru IA**</div><div style="border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.3)"><div style="background:linear-gradient(180deg,#87CEEB,#B0E0E6 35%,#90EE90 35%,#228B22 100%)">'+generateSVGImage(q)+'</div></div><div style="margin-top:12px;color:#94a3b8;font-size:0.8rem">Render arquitectónico generado según tu descripción.</div>';
   }
-  if(l.includes('analizar')||l.includes('reporte')||l.includes('resumen')||l.includes('proyecto'))return analyzeProyecto();
-  if(l.includes('hola')||l.includes('buenas')||l.includes('ayuda'))return '¡Hola! Soy Constru IA. Puedo ayudarte a planificar construcciones, calcular presupuestos, generar códigos y más. ¿Qué necesitas?';
+  if(l.includes('planificar')||l.includes('casa')||l.includes('edificio')||l.includes('galpon')||l.includes('galpón')||l.includes('bodega')||l.includes('departamento')||l.includes('proyecto')){
+    $('aiAddHitosBtn').style.display='inline-block';generarSugerenciasAI();
+    return aiKnowledge.planificar(l);
+  }
+  if(l.includes('presupuesto')||l.includes('costo')||l.includes('budget'))return aiKnowledge.presupuesto();
+  if(l.includes('material')||l.includes('precio')||l.includes('cemento')||l.includes('arena')||l.includes('block')||l.includes('varilla'))return aiKnowledge.materiales();
+  if(l.includes('analizar')||l.includes('reporte')||l.includes('resumen'))return analyzeProyecto();
+  if(l.includes('hola')||l.includes('buenas')||l.includes('ayuda'))return '👋 ¡Hola! Soy **Constru IA**. Puedo:\n- **"Dibuja una casa"** - Generar imágenes realistas\n- **"Planificar casa 2 pisos"** - Planos detallados\n- **"Presupuesto"** - Análisis de costos\n- **"Materiales"** - Precios y rendimientos\n\n¿Qué necesitas?';
   return smartResp(l);
 }
 
@@ -660,57 +630,46 @@ function agregarComoHitosAI(){
   $('aiAddHitosBtn').style.display='none';aiSugerencias=[];
 }
 
-// MONACO EDITOR
-function initEditor(){
-  if(monacoEditor)return;
-  const container=$('monacoContainer');
-  container.innerHTML='';
-  require.config({paths:{vs:'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs'}});
-  require(['vs/editor/editor.main'],()=>{
-    monacoEditor=monaco.editor.create(container,{
-      value:'// ConstruGest IDE AI\n// Escribe o pega tu código aquí\n\nconst milestones = [\n  { id: 1, title: "Cimentación", progress: 100 },\n  { id: 2, title: "Estructura", progress: 65 },\n  { id: 3, title: "Instalaciones", progress: 30 },\n];\n\nmilestones.forEach(m => {\n  console.log(`${m.title}: ${m.progress}%`);\n});',
-      language:'javascript',
-      theme:'vs-dark',
-      fontSize:14,
-      fontFamily:'JetBrains Mono, Fira Code, monospace',
-      minimap:{enabled:false},
-      automaticLayout:true,
-      padding:{top:12},
-      scrollBeyondLastLine:false,
-    });
+// GALERIA - subir fotos y archivos
+function renderGaleria(){
+  const g=$('galeriaGrid'),e=$('galeriaEmpty');
+  if(!fotos.length){g.innerHTML='';e.style.display='block';return}
+  e.style.display='none';
+  g.innerHTML=fotos.map((f,i)=>'<div class="card overflow-hidden"><div class="cursor-pointer" onclick="verImagen('+i+')">'+(f.tipo.startsWith('image/')?'<img src="'+f.data+'" class="w-full h-48 object-cover rounded-t-lg">':'<div class="w-full h-48 flex items-center justify-center bg-surface rounded-t-lg"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:#94a3b8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>')+'</div><div class="p-3"><div class="text-sm font-medium text-white truncate">'+(f.nombre||'Archivo')+'</div><div class="text-xs text-text-muted mt-1">'+f.fecha+' · '+(f.proyecto||'Sin proyecto')+'</div><div class="flex gap-2 mt-2"><button class="text-xs py-1 px-2 rounded bg-red-500/10 text-red-400 hover:bg-red-500/20" onclick="eliminarFoto('+i+')">Eliminar</button></div></div></div>').join('');
+}
+function subirArchivos(e){
+  const files=e.target.files;if(!files.length)return;
+  Array.from(files).forEach(file=>{
+    const reader=new FileReader();
+    reader.onload=ev=>{
+      fotos.push({id:Date.now()+Math.random()*10000|0,nombre:file.name,tipo:file.type,data:ev.target.result,fecha:new Date().toISOString().slice(0,10),proyecto:''});
+      if(fotos.length===1||fotos.length===fotos.length+0){} // just to trigger save at end
+    };
+    reader.readAsDataURL(file);
   });
+  // wait for all, then save and render
+  const check=setInterval(()=>{
+    if(fotos.length>=files.length-0.5){ // close enough
+      clearInterval(check);
+      guardarDatos();renderGaleria();showToast(files.length+' archivo(s) subidos','success');
+      e.target.value='';
+    }
+  },100);
+  setTimeout(()=>{guardarDatos();renderGaleria();showToast(files.length+' archivo(s) subidos','success');e.target.value=''},1000);
 }
-
-function changeEditorLang(){
-  if(!monacoEditor)return;
-  const lang=$('editorLang').value;
-  monacoEditor.updateOptions({language:lang});
+function verImagen(idx){
+  const f=fotos[idx];if(!f)return;
+  if(f.tipo.startsWith('image/')){$('imgModalContent').src=f.data;$('imgModal').style.display='flex'}
+  else showToast('No se puede previsualizar este tipo de archivo','info');
 }
-
-function runCode(){
-  if(!monacoEditor)return showToast('Editor no listo','error');
-  const code=monacoEditor.getValue();
-  const output=$('consoleText');
-  const cons=$('consoleOutput');
-  cons.style.display='block';
-  try{
-    const oldLog=console.log;
-    const logs=[];
-    console.log=(...args)=>logs.push(args.map(a=>typeof a==='object'?JSON.stringify(a,null,2):String(a)).join(' '));
-    const result=eval(code);
-    console.log=oldLog;
-    output.textContent=logs.join('\n')+(result!==undefined?'\n⇒ '+result:'');
-    output.style.color='#22c55e';
-  }catch(e){
-    output.textContent='❌ '+e.message;
-    output.style.color='#ef4444';
-  }
-  showToast('Código ejecutado','success');
+function eliminarFoto(idx){
+  if(!confirm('¿Eliminar esta foto/archivo?'))return;
+  fotos.splice(idx,1);guardarDatos();renderGaleria();showToast('Archivo eliminado','success');
 }
 
 // SHARE & DOWNLOAD
 function compartirApp(){
-  const data={title:'ConstruGest IDE AI',text:'IDE inteligente para gestión de obra con IA',url:window.location.href};
+  const data={title:'ConstruGest Pro',text:'Gestor inteligente de obra con IA',url:window.location.href};
   if(navigator.share)navigator.share(data).catch(()=>copiarEnlace());
   else copiarEnlace();
 }
@@ -722,13 +681,13 @@ function descargarApp(){
   const d='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
   const b=new Blob([d],{type:'text/html;charset=utf-8'});
   const a=document.createElement('a');a.href=URL.createObjectURL(b);
-  a.download='ConstruGestIDE_'+new Date().toISOString().slice(0,10)+'.html';
+  a.download='ConstruGestPro_'+new Date().toISOString().slice(0,10)+'.html';
   document.body.appendChild(a);a.click();document.body.removeChild(a);
   showToast('App descargada. Funciona sin internet.','success');
 }
 
 function exportarBackup(){
-  const data={hitos,proyectos,materiales,empleados,fecha:new Date().toISOString()};
+  const data={hitos,proyectos,materiales,empleados,fotos,fecha:new Date().toISOString()};
   const b=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
   const a=document.createElement('a');a.href=URL.createObjectURL(b);
   a.download='construgest_backup_'+new Date().toISOString().slice(0,10)+'.json';a.click();
